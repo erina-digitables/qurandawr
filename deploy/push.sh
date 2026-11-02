@@ -2,7 +2,8 @@
 # Ship the last commit from this PC to the server, then migrate, rebuild and restart
 # there. For a server that can't pull from GitHub. Run from Git Bash, anywhere in the repo:
 #   deploy/push.sh
-# It asks for the dawr password once, for the restart.
+# The restart at the end asks for the dawr password, unless the server has
+# /etc/sudoers.d/dawr-restart (see replica/vultr.md).
 set -euo pipefail
 SERVER="${DAWR_SERVER:-dawr@45.63.100.246}"
 cd "$(git rev-parse --show-toplevel)"

@@ -123,7 +123,8 @@ Check with `nslookup dawr.hifzapp.link` until it shows 45.63.100.246 (minutes to
 - 3.3 finished: build passed, `dawr` service running, **live at https://dawr.hifzapp.link**. Sample account and a rating that survives a reload checked in a browser; no errors in the log.
 - 2026-11-02: the inbox checks in Part 4 passed with real email. BUG-013 (confirm link went to localhost) fixed by copying `src/app/auth/confirm/route.ts` to the server and rebuilding.
 - 2026-11-02: `/etc/sudoers.d/90-dawr-temp` removed; `sudo` asks for the `dawr` password again.
-- 2026-11-02: `deploy/push.sh` added for updates from the PC (3.6). A dry run of its copy step against the server changed only the expected files and deleted nothing.
+- 2026-11-02: `deploy/push.sh` added for updates from the PC (3.6). A dry run of its copy step against the server changed only the expected files and deleted nothing. First full run shipped db1740f; the site, the secrets file and the other two sites were fine afterwards.
+- 2026-11-02: `/etc/sudoers.d/dawr-restart` lets `dawr` run exactly `sudo systemctl restart dawr` without a password, so `push.sh` needs no prompt. Every other `sudo` command still asks. To undo: `sudo rm /etc/sudoers.d/dawr-restart`.
 
 ### 3.1 Get the code onto the server
 
@@ -204,7 +205,7 @@ At 03:00 server time, this purges sample accounts older than a day and writes a 
 deploy/push.sh
 ```
 
-It sends the last commit (never uncommitted changes), copies it over `~/app` while keeping the secrets file, installed packages and current build, then runs `deploy/update.sh` on the server: `npm ci`, migrations, build, restart. It asks for the `dawr` password once, for the restart. The site keeps serving the old build until then. `~/app/DEPLOYED_FROM` says which commit is live.
+It sends the last commit (never uncommitted changes), copies it over `~/app` while keeping the secrets file, installed packages and current build, then runs `deploy/update.sh` on the server: `npm ci`, migrations, build, restart. The restart needs no password because of `/etc/sudoers.d/dawr-restart` (see the status above); without that file it asks for the `dawr` password once. The site keeps serving the old build until the restart. `~/app/DEPLOYED_FROM` says which commit is live.
 
 **On a server with a git checkout (3.1):** run `~/app/deploy/update.sh` there. It pulls first, then does the same.
 
