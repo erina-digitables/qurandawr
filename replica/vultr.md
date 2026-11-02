@@ -114,7 +114,7 @@ Check with `nslookup dawr.hifzapp.link` until it shows 45.63.100.246 (minutes to
 **Status on nazira-server, 2026-11-01** (Claude ran these over SSH as `dawr`, with temporary password-free sudo):
 
 - Node 22.23.4 and PostgreSQL 18.6 installed; Postgres listens on localhost only.
-- 3.1: the code was **copied from the PC** (`git archive` of 455b30e over SSH, plus the new nginx file) instead of cloned, so the server has no GitHub access and `~/app` is not a git checkout. `update.sh` (3.6) therefore doesn't work yet.
+- 3.1: the code was **copied from the PC** (`git archive` of 455b30e over SSH, plus the new nginx file) instead of cloned, so the server has no GitHub access and `~/app` is not a git checkout. Updates go out with `deploy/push.sh` from the PC (3.6).
 - 2.4 and 3.2: roles and the `dawr` database (UTF8) created; `.env.production.local` written by the server with random passwords and `CRON_SECRET` that nobody saw. **Still empty: `RESEND_API_KEY`, `EMAIL_FROM`.**
 - 3.3: `npm ci` and `npm run db:migrate` done (5 migrations, 240 quarters; `dawr_app` has no superuser or bypass-RLS rights). **`npm run build` waits for the Resend key**: the app refuses a production build without email. The `dawr` service is installed and enabled but not started.
 - 3.4: Dawr's nginx site is in and nginx reloaded; both other sites still answer 200. DNS record `dawr` (A, DNS only) added in Cloudflare; certbot certificate issued, expires 2027-01-30, renews automatically; http redirects to https.
@@ -123,7 +123,7 @@ Check with `nslookup dawr.hifzapp.link` until it shows 45.63.100.246 (minutes to
 - 3.3 finished: build passed, `dawr` service running, **live at https://dawr.hifzapp.link**. Sample account and a rating that survives a reload checked in a browser; no errors in the log.
 - 2026-11-02: the inbox checks in Part 4 passed with real email. BUG-013 (confirm link went to localhost) fixed by copying `src/app/auth/confirm/route.ts` to the server and rebuilding.
 - 2026-11-02: `/etc/sudoers.d/90-dawr-temp` removed; `sudo` asks for the `dawr` password again.
-- **Still to do:** a way to update the code without git on the server.
+- 2026-11-02: `deploy/push.sh` added for updates from the PC (3.6). A dry run of its copy step against the server changed only the expected files and deleted nothing.
 
 ### 3.1 Get the code onto the server
 
@@ -198,11 +198,15 @@ At 03:00 server time, this purges sample accounts older than a day and writes a 
 
 ### 3.6 Updating later
 
+**On nazira-server (code copied, not cloned):** commit on the PC, then from Git Bash in the repo:
+
 ```bash
-cd ~/app && git pull && cd web && npm ci && npm run db:migrate && npm run build && sudo systemctl restart dawr
+deploy/push.sh
 ```
 
-`deploy/update.sh` does exactly this.
+It sends the last commit (never uncommitted changes), copies it over `~/app` while keeping the secrets file, installed packages and current build, then runs `deploy/update.sh` on the server: `npm ci`, migrations, build, restart. It asks for the `dawr` password once, for the restart. The site keeps serving the old build until then. `~/app/DEPLOYED_FROM` says which commit is live.
+
+**On a server with a git checkout (3.1):** run `~/app/deploy/update.sh` there. It pulls first, then does the same.
 
 ---
 
