@@ -1,6 +1,6 @@
 # Bugs
 
-Found by `/replica-test` on 2026-10-30. Every bug below was reproduced by a failing test first, then fixed, and the test is kept. Summary: **12 found, 9 fixed, 3 open.** By severity: S1 ×2, S2 ×3, S3 ×4, S4 ×3. Open: BUG-010 (S2, partly fixed, re-check on the real server), BUG-008 and BUG-009 (S4). BUG-010 to BUG-012 came from running the suite on Postgres (2026-10-31).
+Found by `/replica-test` on 2026-10-30. Every bug below was reproduced by a failing test first, then fixed, and the test is kept. Summary: **13 found, 10 fixed, 3 open.** By severity: S1 ×2, S2 ×3, S3 ×4, S4 ×4. Open: BUG-010 (S4 since the real-server check on 2026-11-02), BUG-008 and BUG-009 (S4). BUG-010 to BUG-012 came from running the suite on Postgres (2026-10-31).
 
 ### BUG-001: Sign-up and the sample account were capped for the whole app, not per visitor
 
@@ -157,7 +157,7 @@ Not yet committed; the fixes below are in the working tree.
 
 ### BUG-010: With a near-instant server reply, a form or rating can stay "saving" forever
 
-- Severity: S2 (the save itself lands; the screen doesn't catch up until a reload. Sign-up can look stuck after the account was created, so a second press says the username is taken)
+- Severity: S4 (was S2; downgraded 2026-11-02, see Status) (the save itself lands; the screen doesn't catch up until a reload. Sign-up can look stuck after the account was created, so a second press says the username is taken)
 - Flow / case: F03-E1/E3/E4/E7 and F01 sign-up, intermittently, under `npm run e2e:postgres` only
 - Steps: on the Postgres backend at localhost speed (replies in ~15 ms), sign up or rate a quarter, repeatedly.
 - Expected: the busy state clears when the reply arrives.
@@ -165,6 +165,19 @@ Not yet committed; the fixes below are in the working tree.
 - Evidence: per-run request logs; every database transaction that started also finished; the action's promise resolved (`saved 1` logged in the browser); Next's router never consumed the reply.
 - Suspected cause: a race inside Next's client router when an action reply lands very fast. Not found in Next's issue tracker.
 - Status: **partly fixed, still open.** The Today board no longer depends on the transition for its saving indicator (plain state, set before the transition and cleared when the save settles), so ratings recover. Forms using `useActionState` (sign-up, sign-in, reset) can still show it. **Re-check on the real server**, where every reply crosses the network: if it never appears there, downgrade to S4.
+- Re-checked on dawr.hifzapp.link, 2026-11-02: two sign-ups, sign-in, sign-out, a password reset and four ratings all cleared their busy state. Not seen, so S4. Still open in the local Postgres suite.
+
+## Found on the live server (2026-11-02)
+
+### BUG-013: The confirm-email link sends you to localhost
+
+- Severity: S2 (the account is confirmed and signed in, but the browser lands on "This site can't be reached"; clicking the link again then says it failed, because links work once)
+- Flow / case: F01 / F01-E11, live at dawr.hifzapp.link
+- Steps: sign up, click "Confirm my email" in the email.
+- Expected: Today, on dawr.hifzapp.link.
+- Actual: `https://localhost:3000/today` (and `/signin?confirm=failed` on a second click). `curl -D - https://dawr.hifzapp.link/auth/confirm?token_hash=x&type=email` showed `location: https://localhost:3000/...`.
+- Suspected cause: the route built the redirect from `request.nextUrl`, and behind nginx Next takes itself for localhost:3000.
+- Status: fixed (not yet committed); deployed to the server by copying the one file. The redirect now comes from `SITE_URL`; F01-E11 keeps it. The local suite can't reproduce the bad host (Next sees localhost there too), so the live `curl` is the check: it now shows `dawr.hifzapp.link`.
 
 ## To check (not reproduced, or not reproducible here)
 

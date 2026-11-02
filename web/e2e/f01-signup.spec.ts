@@ -148,6 +148,17 @@ test.describe("F01 new user signs up and starts revising", () => {
     expect(results.at(-1)).toBe("blocked");
   });
 
+  test("F01-E11 the confirm link sends you back to the site's own address, not the server's", async ({ request, baseURL }) => {
+    // Behind nginx, Next saw itself as localhost:3000 and redirected there (live on 2026-11-02).
+    // The redirect must come from SITE_URL, whatever host the request names.
+    const res = await request.get("/auth/confirm?token_hash=not-a-real-token&type=email", {
+      headers: { host: "elsewhere.test", "x-forwarded-host": "elsewhere.test" },
+      maxRedirects: 0,
+    });
+    expect(res.status()).toBe(307);
+    expect(res.headers()["location"]).toBe(`${baseURL}/signin?confirm=failed`);
+  });
+
   test("F01-E8 keyboard only: tab through the form and submit with Enter", async ({ page }) => {
     const a = newAccount();
     await page.goto("/signup");

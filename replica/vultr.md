@@ -121,7 +121,9 @@ Check with `nslookup dawr.hifzapp.link` until it shows 45.63.100.246 (minutes to
 - 3.5: nightly jobs installed (03:00 and 03:30 UTC); a test backup worked, readable by `dawr` only.
 - 2.6: Resend domain hifzapp.link (Ireland region) verified via manual DNS records in Cloudflare (`resend._domainkey`, `rsend`, `send`, `_dmarc`); sending-only API key in the secrets file; `EMAIL_FROM=Dawr <noreply@hifzapp.link>`; a test send to delivered@resend.dev returned 200.
 - 3.3 finished: build passed, `dawr` service running, **live at https://dawr.hifzapp.link**. Sample account and a rating that survives a reload checked in a browser; no errors in the log.
-- **Still to do:** the Part 4 checks that need a real inbox (sign-up confirmation, password reset, a second account); remove `/etc/sudoers.d/90-dawr-temp` (password-free sudo for the setup); a way to update the code without git on the server.
+- 2026-11-02: the inbox checks in Part 4 passed with real email. BUG-013 (confirm link went to localhost) fixed by copying `src/app/auth/confirm/route.ts` to the server and rebuilding.
+- 2026-11-02: `/etc/sudoers.d/90-dawr-temp` removed; `sudo` asks for the `dawr` password again.
+- **Still to do:** a way to update the code without git on the server.
 
 ### 3.1 Get the code onto the server
 
@@ -206,10 +208,10 @@ cd ~/app && git pull && cd web && npm ci && npm run db:migrate && npm run build 
 
 ## Part 4: checks before you tell anyone
 
-- [ ] Sign up with your real email → the confirmation email arrives from your domain, the link works.
-- [ ] Rate four quarters, reload: kept.
-- [ ] Sign up a second account in a private window: it sees none of the first one's data.
-- [ ] Forgot password → the code arrives, reset works, the other browser is signed out.
+- [x] Sign up with your real email → the confirmation email arrives from your domain, the link works. (2026-11-02: arrived in the Gmail inbox, not spam; the link first sent people to localhost, BUG-013, fixed.)
+- [x] Rate four quarters, reload: kept.
+- [x] Sign up a second account in a private window: it sees none of the first one's data (Today and History empty).
+- [x] Forgot password → the code arrives, reset works, the other browser is signed out.
 - [ ] "Try it with sample data" works; the next morning it's gone (`journalctl -u dawr` shows the purge).
 - [ ] `ls ~/backups` shows last night's dump.
 - [ ] `sudo ss -tlnp` shows Postgres and Dawr's Node (:3000) on `127.0.0.1` only, and only nginx on 80/443. (The hifzapp's Node on 3001 listens on all addresses, but the firewall blocks it from outside.)
