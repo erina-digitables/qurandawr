@@ -1,8 +1,8 @@
-// Screenshots for the manual visual pass (M4 in replica/test-plan.md). Skipped unless
+// Screenshots for the manual visual pass (M4 in docs/test-plan.md). Skipped unless
 // asked for: SCREENS=1 npx playwright test screens --project=desktop
 import { expect, startDemo, test } from "./fixtures";
 
-const out = (name: string) => `../replica/test-screens/${name}.png`;
+const out = (name: string) => `../docs/test-screens/${name}.png`;
 
 test.skip(!process.env.SCREENS, "only on request");
 

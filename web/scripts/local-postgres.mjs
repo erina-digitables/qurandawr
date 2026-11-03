@@ -1,5 +1,5 @@
 // A real Postgres on this machine, for development and the e2e suite, with the
-// same roles your server gets in replica/vultr.md step 2.4. Local only: it listens
+// same roles your server gets in docs/vultr.md step 2.4. Local only: it listens
 // on 127.0.0.1 and the passwords below are for this throwaway database.
 //   npm run db:local          keeps its data in .pg-local/ (then: npm run db:migrate)
 //   node scripts/local-postgres.mjs --e2e   empty, in .pg-e2e/, for the e2e suite

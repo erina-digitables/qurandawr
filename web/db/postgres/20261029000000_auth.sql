@@ -6,7 +6,7 @@
 -- The app connects as a login role that is a member of "authenticated" and does
 -- NOT own the tables, so row level security applies to it. The server sets the
 -- signed-in user per transaction: select set_config('app.user_id', '<uuid>', true).
--- The roles themselves are created by a superuser (replica/vultr.md step 2.4).
+-- The roles themselves are created by a superuser (docs/vultr.md step 2.4).
 
 -- Names and notes can hold any script or emoji, so the database must be UTF-8.
 do $$ begin

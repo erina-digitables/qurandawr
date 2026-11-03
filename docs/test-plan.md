@@ -88,6 +88,6 @@ Result of the last full run: **99 passed, 0 failed** (two runs in a row; crowd t
 | M1 | confirmation and reset emails arrive from your domain, links and codes work | **blocked**: needs your Supabase + Resend keys (see `backend.md` live checks) |
 | M2 | anonymous sign-in, RLS and the purge cron on real Supabase | **blocked**: same |
 | M3 | real screen reader (NVDA on Windows, VoiceOver on iPhone) through F03 | **to do by you**: automated checks cover names, roles and focus, not the spoken experience |
-| M4 | visual check, light and dark, 390 and 1440 | done: screenshots in `replica/test-screens/`, looked at by eye |
+| M4 | visual check, light and dark, 390 and 1440 | done: screenshots in `docs/test-screens/`, looked at by eye |
 | M5 | a real phone: touch targets, the sticky plan bar over the keyboard | **to do by you** |
 | — | OAuth, payments | not in this app |

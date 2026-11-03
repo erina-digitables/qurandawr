@@ -1,5 +1,5 @@
 // Development stand-in for Supabase: one JSON file on disk, so data survives
-// dev-server restarts. replica-backend replaces this module; the functions in
+// dev-server restarts. The real backends replace this module; the functions in
 // ./index.ts keep their signatures, so no screen code changes.
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";

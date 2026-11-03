@@ -1,6 +1,6 @@
 # Bugs
 
-Found by `/replica-test` on 2026-10-30. Every bug below was reproduced by a failing test first, then fixed, and the test is kept. Summary: **13 found, 10 fixed, 3 open.** By severity: S1 ×2, S2 ×3, S3 ×4, S4 ×4. Open: BUG-010 (S4 since the real-server check on 2026-11-02), BUG-008 and BUG-009 (S4). BUG-010 to BUG-012 came from running the suite on Postgres (2026-10-31).
+Found by the test pass on 2026-10-30. Every bug below was reproduced by a failing test first, then fixed, and the test is kept. Summary: **13 found, 10 fixed, 3 open.** By severity: S1 ×2, S2 ×3, S3 ×4, S4 ×4. Open: BUG-010 (S4 since the real-server check on 2026-11-02), BUG-008 and BUG-009 (S4). BUG-010 to BUG-012 came from running the suite on Postgres (2026-10-31).
 
 ### BUG-001: Sign-up and the sample account were capped for the whole app, not per visitor
 
@@ -120,8 +120,8 @@ Steps
 
 Expected: "Sample account" or a normal-length email fits; the header column has room.
 Actual: "Sample ac…". The five round icon buttons leave the label about 70px.
-Evidence: `replica/test-screens/1440-light-history.png`, `1440-dark-stats.png`.
-Status: open. Fix with replica-brand's header pass: drop the email line to a tooltip/Settings, or let the column widen on desktop.
+Evidence: `docs/test-screens/1440-light-history.png`, `1440-dark-stats.png`.
+Status: open. Fix in the brand pass: drop the email line to a tooltip/Settings, or let the column widen on desktop.
 
 ### BUG-009: In dark mode, the bars for days short of the goal are near-white
 
@@ -134,8 +134,8 @@ Steps
 
 Expected: short days quieter than goal-met days.
 Actual: short days use `accent`, which is the near-white neutral placeholder in dark mode.
-Evidence: `replica/test-screens/1440-dark-stats.png` (Wed, Sat).
-Status: open, on purpose: `accent` is a placeholder until replica-brand sets the real colour. Re-check this chart then.
+Evidence: `docs/test-screens/1440-dark-stats.png` (Wed, Sat).
+Status: open, on purpose: `accent` is a placeholder until the brand pass sets the real colour. Re-check this chart then.
 
 ## Found while adding the Postgres backend (2026-10-31)
 

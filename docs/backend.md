@@ -73,7 +73,7 @@ Update 2026-10-31: **you chose your own Vultr server over Supabase.** The app no
 
 ## Payments
 
-None. The PRO tier is `skip` in the feature matrix (no pricing to study). If replica-entrepreneur prices a plan, add Stripe Checkout + Customer Portal then.
+None. The PRO tier is `skip` in the feature matrix (no pricing to study). If a paid plan is priced, add Stripe Checkout + Customer Portal then.
 
 ## Email and jobs
 

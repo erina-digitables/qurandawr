@@ -9,7 +9,7 @@ export default function DesignPage() {
       <header className="px-4 py-6 sm:px-6">
         <h1 className="font-display text-display text-text">Design system</h1>
         <p className="mt-1 text-sm text-text-muted">
-          Every primitive and its states, from <code className="font-mono">replica/design/tokens.json</code>. Light and dark side by side.
+          Every primitive and its states, from <code className="font-mono">docs/design/tokens.json</code>. Light and dark side by side.
         </p>
       </header>
       <div className="grid md:grid-cols-2">

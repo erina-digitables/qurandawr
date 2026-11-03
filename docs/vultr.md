@@ -139,7 +139,7 @@ On GitHub: the repo → **Settings → Deploy keys → Add deploy key**, paste i
 
 ```bash
 printf 'Host github.com\n  IdentityFile ~/.ssh/github_dawr\n' >> ~/.ssh/config
-git clone git@github.com:erina-digitables/replicaquarandawr.git ~/app
+git clone git@github.com:erina-digitables/qurandawr.git ~/app
 ```
 
 ### 3.2 The secrets file

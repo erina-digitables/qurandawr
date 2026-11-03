@@ -1,4 +1,4 @@
-// Production backend on your own Postgres (replica/vultr.md). Same schema and
+// Production backend on your own Postgres (docs/vultr.md). Same schema and
 // rules as Supabase: db/postgres/*_auth.sql stands in for Supabase Auth.
 // Every read and write of user data runs in a transaction that first sets
 // app.user_id, so row level security decides what the query can touch. The app

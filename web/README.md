@@ -25,6 +25,6 @@ Open http://localhost:3000 and choose **Try it with sample data**, or create an 
 | `src/lib/data` | the data layer: the only code that touches storage |
 | `src/lib/dawr.ts` | pure revision logic: streaks, suggestions, stats |
 | `src/data/quarters.json` | the 240 quarters: juz, hizb, start surah and ayah |
-| `src/styles` | design tokens, generated from `../replica/design/tokens.json` |
+| `src/styles` | design tokens, generated from `../docs/design/tokens.json` |
 
 Quarter start points come from [quran-meta](https://github.com/quran-center/quran-meta) (MIT).

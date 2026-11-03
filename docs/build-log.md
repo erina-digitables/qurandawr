@@ -4,7 +4,7 @@ Stack as built: Next.js 15 (App Router, server actions) + Tailwind v4 tokens, in
 
 | ID | date | status | missing | harder than expected |
 | --- | --- | --- | --- | --- |
-| shell | 2026-10-30 | done | — | Quarter reference data: the quran.ai metadata stops at the hizb level, so the 240 quarter start points come from `quran-meta` (MIT), generated once into `web/src/data/quarters.json` and `replica/seed-quarters.sql`. Juz boundaries were cross-checked: 0 mismatches. |
+| shell | 2026-10-30 | done | — | Quarter reference data: the quran.ai metadata stops at the hizb level, so the 240 quarter start points come from `quran-meta` (MIT), generated once into `web/src/data/quarters.json` and `docs/seed-quarters.sql`. Juz boundaries were cross-checked: 0 mismatches. |
 | S04 Today | 2026-10-30 | done | Offline queue (could-have) | Choosing what to show when there is no plan: settled on "carry on after the last quarter finished on the previous active day". Past days with no log show an empty state instead of a guess. |
 | S05 Plan | 2026-10-30 | done | — | Two-column tiles squeezed the labels, so tiles read Q1–Q8 (screen readers hear "Quarter 1"). The selection bar is sticky at the bottom. |
 | S06 Progress | 2026-10-30 | done | — | Week bars for empty days were 4px tap targets; the whole column is now the button. |
@@ -26,7 +26,7 @@ Stack as built: Next.js 15 (App Router, server actions) + Tailwind v4 tokens, in
 
 ## Not done yet (honest list)
 
-- The fake data layer is single-process and file-based: fine for development, not for deployment. replica-backend added the Supabase implementation behind the same interface (see `backend.md`).
+- The fake data layer is single-process and file-based: fine for development, not for deployment. The backend pass added the Supabase implementation behind the same interface (see `backend.md`).
 - Password-reset email (Resend) and the nightly demo-account purge (Vercel Cron) need the backend.
-- replica-test added the Playwright suite (`npm run e2e`, 99 cases, every flow, axe on every screen at 390 and 1440, light and dark). See `test-plan.md` and `bugs.md`. Still no unit tests for `web/src/lib/dawr.ts`; its behaviour is covered end to end.
+- The test pass added the Playwright suite (`npm run e2e`, 99 cases, every flow, axe on every screen at 390 and 1440, light and dark). See `test-plan.md` and `bugs.md`. Still no unit tests for `web/src/lib/dawr.ts`; its behaviour is covered end to end.
 - Signed-out screens are now in the 390px sweep too (`e2e/a11y.spec.ts`).

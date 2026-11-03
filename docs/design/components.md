@@ -1,6 +1,6 @@
 # Components: Dawr tracker
 
-Built from the recon component list (`replica/recon.md`). Tokens: `tokens.json` → `tokens.css` + `tailwind.css`. Components use role utilities only (`bg-surface`, `text-text-muted`, `border-border-input`), never hex.
+Built from the recon component list (`docs/recon.md`). Tokens: `tokens.json` → `tokens.css` + `tailwind.css`. Components use role utilities only (`bg-surface`, `text-text-muted`, `border-border-input`), never hex.
 
 Global rules:
 - **Focus:** every interactive element shows `focus-visible` as a 2px `focus` ring with a 2px offset in `bg`. The ring is never removed.
@@ -217,8 +217,8 @@ ThemeToggle
 
 ## Primitives built
 
-See `web/src/app/design/page.tsx`, a `/design` route that renders every primitive and its states in light and dark side by side. Components live in `web/src/components/ui/`. Screenshots of the check are in `replica/design/screens/`.
+See `web/src/app/design/page.tsx`, a `/design` route that renders every primitive and its states in light and dark side by side. Components live in `web/src/components/ui/`. Screenshots of the check are in `docs/design/screens/`.
 
-Run it with `npm --prefix web run dev` and open http://localhost:3000/design. After any token change, run `node replica/design/build-tokens.mjs` (it also refreshes `web/src/styles/`) and then the contrast check.
+Run it with `npm --prefix web run dev` and open http://localhost:3000/design. After any token change, run `node docs/design/build-tokens.mjs` (it also refreshes `web/src/styles/`) and then the contrast check.
 
 Not yet built as primitives (spec only): ConfirmDialog, SettingsField, TipCard, ThemeToggle menu, SelectionBar. They are simple compositions of the parts above and get built with their screens.

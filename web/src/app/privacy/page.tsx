@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = { title: "Privacy" };
 
 // A plain-language starting point. Have it reviewed before launch, and fill in the
-// operator's name and contact address (replica-deploy checklist).
+// operator's name and contact address (launch checklist).
 const processors = [
   ["Supabase", "Database and sign-in. Stores your account and revision logs.", "https://supabase.com/privacy"],
   ["Vercel", "Hosts the app and runs the nightly clean-up job.", "https://vercel.com/legal/privacy-policy"],
