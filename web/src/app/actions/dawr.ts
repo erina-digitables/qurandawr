@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { backend, DataError, type DayLog, type Quality, type Theme } from "@/lib/data";
 import type { ISODate } from "@/lib/dates";
+import { TOTAL_QUARTERS } from "@/lib/quarters";
 import { requireUser, THEME_COOKIE, userToday } from "@/lib/session";
 import * as v from "@/lib/validation";
 
@@ -29,7 +30,7 @@ export async function rateQuarter(date: string, rub: number, quality: Quality | 
 
 export async function savePlan(date: string, rubs: number[], locked: boolean) {
   const { user, date: d } = await dayFor(date);
-  const list = [...new Set(z.array(v.rub).max(240).parse(rubs))].sort((a, b) => a - b);
+  const list = [...new Set(z.array(v.rub).max(TOTAL_QUARTERS).parse(rubs))].sort((a, b) => a - b);
   await backend.savePlan(user.id, d, list, z.boolean().parse(locked));
   refresh();
 }

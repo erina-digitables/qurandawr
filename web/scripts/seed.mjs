@@ -13,8 +13,8 @@ const admin = createClient(url, key, { auth: { persistSession: false, autoRefres
 
 // Invented people on a reserved test domain.
 const people = [
-  { fullName: "Sample Reader One", username: "sample_one", email: "sample.one@example.test", timezone: "Europe/London", days: 21, perDay: 4 },
-  { fullName: "Sample Reader Two", username: "sample_two", email: "sample.two@example.test", timezone: "Asia/Karachi", days: 10, perDay: 8 },
+  { fullName: "Sample Reader One", username: "sample_one", email: "sample.one@example.test", timezone: "Europe/London", days: 21, perDay: 2 },
+  { fullName: "Sample Reader Two", username: "sample_two", email: "sample.two@example.test", timezone: "Asia/Karachi", days: 10, perDay: 4 },
 ];
 const qualities = ["good", "good", "good", "average", "needs_work"];
 
@@ -57,7 +57,7 @@ for (const p of people) {
         quality: qualities[(rub + k) % qualities.length],
         completed_at: `${isoDaysAgo(i)}T05:30:00Z`,
       };
-      rub = (rub % 240) + 1;
+      rub = (rub % 120) + 1;
       return row;
     });
     const ins = await admin.from("log_quarters").insert(rows);

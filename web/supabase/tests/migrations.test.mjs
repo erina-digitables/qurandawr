@@ -32,7 +32,33 @@ await db.exec(`
   create function auth.uid() returns uuid language sql stable as
     $$ select nullif(current_setting('test.uid', true), '')::uuid $$;
 `);
-for (const f of readdirSync(dir).filter((f) => f.endsWith(".sql")).sort()) await db.exec(readFileSync(join(dir, f), "utf8"));
+// Stop before the move to 4 quarters a juz, save a day the old way, then run the
+// rest, so the move is checked on real rows and not only on an empty database.
+const QUARTER_OF_JUZ = "20261106000001_quarter_of_juz.sql";
+const files = readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
+for (const f of files.filter((f) => f < QUARTER_OF_JUZ)) await db.exec(readFileSync(join(dir, f), "utf8"));
+const L = "00000000-0000-0000-0000-00000000000c";
+await q(`insert into auth.users values ($1,'l@example.test','{"full_name":"L","username":"layla","timezone":"UTC"}')`, [L]);
+await q(`update profiles set daily_target = 5 where id = $1`, [L]);
+const lLog = (await q(`insert into daily_logs (user_id, log_date, target_quarters) values ($1, '2026-11-01', 8) returning id`, [L]))[0].id;
+await q(
+  `insert into log_quarters (log_id, user_id, rub, planned, quality, completed_at) values
+    ($1,$2,1,false,'good','2026-11-01T05:00Z'), ($1,$2,2,false,'needs_work','2026-11-01T06:00Z'),
+    ($1,$2,3,true,null,null), ($1,$2,240,false,'average','2026-11-01T07:00Z')`,
+  [lLog, L],
+);
+for (const f of files.filter((f) => f >= QUARTER_OF_JUZ)) await db.exec(readFileSync(join(dir, f), "utf8"));
+console.log("move to 4 quarters a juz");
+const moved = await q(`select rub, planned, quality, completed_at::text t from log_quarters where log_id = $1 order by rub`, [lLog]);
+check(
+  "old rub' pairs merge into quarters of a juz, keeping the weaker rating and the later time",
+  JSON.stringify(moved.map((r) => [r.rub, r.planned, r.quality])) === JSON.stringify([[1, false, "needs_work"], [2, true, null], [120, false, "average"]]) &&
+    moved[0].t.startsWith("2026-11-01 06:00"),
+  JSON.stringify(moved),
+);
+check("goals halve, rounding up", (await q(`select daily_target d from profiles where id = $1`, [L]))[0].d === 3 &&
+  (await q(`select target_quarters t from daily_logs where id = $1`, [lLog]))[0].t === 4);
+await q(`delete from auth.users where id = $1`, [L]);
 await db.exec(`
   grant usage on schema auth to authenticated;
   grant select, insert, update, delete on profiles, daily_logs, log_quarters, quarters to authenticated;
@@ -47,8 +73,10 @@ const as = async (uid) => db.exec(`set role authenticated; select set_config('te
 const admin = async () => db.exec(`reset role; select set_config('test.uid', '', false);`);
 
 console.log("schema");
-check("240 quarters seeded", (await q(`select count(*)::int c from quarters`))[0].c === 240);
-check("juz boundaries consistent", (await q(`select count(*)::int c from quarters where juz <> ((rub-1)/8)+1`))[0].c === 0);
+check("120 quarters, 4 a juz", (await q(`select count(*)::int c from quarters`))[0].c === 120);
+check("juz boundaries consistent", (await q(`select count(*)::int c from quarters where juz <> ((rub-1)/4)+1`))[0].c === 0);
+check("quarter 2 starts mid-hizb (Al-Baqara 2:44)", JSON.stringify(Object.values((await q(`select start_surah, start_ayah from quarters where rub = 2`))[0])) === "[2,44]");
+check("new accounts default to half a juz", (await q(`select daily_target d from profiles limit 1`))[0].d === 2);
 check("profiles created by trigger", (await q(`select count(*)::int c from profiles`))[0].c === 2);
 await rejects("duplicate username (any case) rejected", () =>
   q(`insert into auth.users values (gen_random_uuid(),'c@example.test','{"full_name":"C","username":"Ahmad"}')`),
@@ -88,7 +116,7 @@ await q(`select set_quality($1, 6::smallint, null)`, [today]);
 check("clearing a planned quarter keeps it planned", (await q(`select planned from log_quarters where rub=6`))[0]?.planned === true);
 
 await q(`select set_daily_target(8::smallint)`);
-check("target change does not rewrite a day already started", (await q(`select target_quarters t from daily_logs where log_date=$1`, [today]))[0].t === 4);
+check("target change does not rewrite a day already started", (await q(`select target_quarters t from daily_logs where log_date=$1`, [today]))[0].t === 2);
 await q(`select set_quality($1, 9::smallint, 'good')`, [await_day(1)]);
 check("new day snapshots the new target", (await q(`select target_quarters t from daily_logs where log_date=$1`, [await_day(1)]))[0].t === 8);
 await q(`select set_daily_target(4::smallint)`);

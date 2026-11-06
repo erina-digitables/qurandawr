@@ -5,20 +5,18 @@ import { devDb, expect, expectNoA11yViolations, expectNoHorizontalScroll, ipFor,
 const progress = (page: import("@playwright/test").Page) => page.getByRole("progressbar", { name: "Today's progress" });
 
 test.describe("F03 log today's revision (core loop)", () => {
-  test("F03-H1 rate all four quarters: progress fills, goal met, kept after reload", async ({ page }) => {
+  test("F03-H1 rate both of today's quarters: progress fills, goal met, kept after reload", async ({ page }) => {
     await signUp(page);
     await expectNoHorizontalScroll(page);
     await rate(page, 1, 1, "Good");
     await expect(progress(page)).toHaveAttribute("aria-valuenow", "1");
-    await rate(page, 1, 2, "Okay");
-    await rate(page, 1, 3, "Weak");
-    await rate(page, 1, 4, "Good");
-    await expect(progress(page)).toHaveAttribute("aria-valuenow", "4");
+    await rate(page, 1, 2, "Weak");
+    await expect(progress(page)).toHaveAttribute("aria-valuenow", "2");
     await expect(page.getByRole("status").filter({ hasText: "Goal met" })).toBeVisible();
     await expectNoA11yViolations(page);
     await page.reload();
-    await expect(progress(page)).toHaveAttribute("aria-valuenow", "4");
-    await expect(quarterGroup(page, 1, 3).getByRole("radio", { name: "Weak" })).toHaveAttribute("aria-checked", "true");
+    await expect(progress(page)).toHaveAttribute("aria-valuenow", "2");
+    await expect(quarterGroup(page, 1, 2).getByRole("radio", { name: "Weak" })).toHaveAttribute("aria-checked", "true");
     // The header streak counts today once the goal is met.
     await expect(page.getByRole("banner").getByText("Streak: 1 day")).toBeVisible();
   });
@@ -92,16 +90,16 @@ test.describe("F03 log today's revision (core loop)", () => {
     expect((await devDb()).logs.filter((l) => l.userId === id)).toHaveLength(0);
   });
 
-  test("F03-E7 beyond the goal: a fifth rated quarter counts and says so", async ({ page }) => {
+  test("F03-E7 beyond the goal: a third rated quarter counts and says so", async ({ page }) => {
     await signUp(page);
     await page.goto("/plan");
-    await page.getByRole("button", { name: /Next 4 in order/ }).click();
-    await page.getByRole("button", { name: /Juz 1 ·/ }).getByText("4 of 8 picked").waitFor();
-    await page.getByRole("checkbox", { name: "Quarter 5" }).check();
+    await page.getByRole("button", { name: /Next 2 in order/ }).click();
+    await page.getByRole("button", { name: /Juz 1 ·/ }).getByText("2 of 4 picked").waitFor();
+    await page.getByRole("checkbox", { name: "Quarter 3" }).check();
     await page.getByRole("button", { name: "Start reading" }).click();
     await expect(page).toHaveURL(/\/today/);
-    for (const q of [1, 2, 3, 4, 5]) await rate(page, 1, q, "Good");
-    await expect(page.getByText(/5\s*of 4 quarters read/)).toBeVisible();
+    for (const q of [1, 2, 3]) await rate(page, 1, q, "Good");
+    await expect(page.getByText(/3\s*of 2 quarters read/)).toBeVisible();
     await expect(page.getByText("beyond today's goal")).toBeVisible();
   });
 

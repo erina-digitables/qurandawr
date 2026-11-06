@@ -91,7 +91,7 @@ function GoalPanel({ target: initial }: { target: number }) {
       <div>
         <h2 className="font-display text-base font-extrabold text-text">Daily goal</h2>
         <p className="text-sm text-text-muted">
-          {target} quarters is {juzLabel(target)}. A juz has 8 quarters, so 8 a day finishes the Quran in a month.
+          {target} {target === 1 ? "quarter" : "quarters"} is {juzLabel(target)}. A juz has 4 quarters, so 4 a day finishes the Quran in a month.
         </p>
       </div>
       <TargetStepper value={target} onChange={change} />

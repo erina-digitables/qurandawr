@@ -24,10 +24,10 @@ test.describe("F05 review or edit a past day", () => {
   test("F05-H3 the demo's stats add up", async ({ page }) => {
     await startDemo(page);
     await page.goto("/history");
-    // demoDays pattern 4,4,5,0,4,3,4,4,6,4,2,4,4: 12 logged days, 48 quarters, 10 with the goal met.
+    // demoDays pattern 2,2,3,0,2,1,2,2,3,2,1,2,2: 12 logged days, 24 quarters, 10 with the goal met.
     const stat = (k: string) => page.locator("dl > div").filter({ has: page.getByText(k, { exact: true }) }).locator("dd");
     await expect(stat("Days")).toHaveText("12");
-    await expect(stat("Quarters")).toHaveText("48");
+    await expect(stat("Quarters")).toHaveText("24");
     await expect(stat("Goal met")).toHaveText("10");
     await expect(page.getByRole("banner").getByText(/Streak: 2 days/)).toBeVisible();
     await expect(page.getByText("Sample account")).toBeVisible();
@@ -68,7 +68,7 @@ test.describe("F06 browse history", () => {
     await page.getByRole("button", { name: /^Delete log for/ }).click();
     await expect(page.getByText("No days logged yet")).toBeVisible();
     await page.getByRole("button", { name: "Undo" }).click();
-    await expect(page.getByRole("link", { name: /2\/4/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /2\/2/ })).toBeVisible();
     await page.reload();
     await expect(page.getByText("1 weak")).toBeVisible();
   });

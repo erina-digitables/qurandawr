@@ -6,14 +6,14 @@ test.describe("F07 change the default daily target", () => {
     await page.getByRole("link", { name: "Settings" }).click();
     await expect(page).toHaveURL(/\/settings/);
     await expectNoA11yViolations(page);
-    await page.getByRole("radio", { name: /^8 qtrs/ }).click();
+    await page.getByRole("radio", { name: /^4 qtrs/ }).click();
     await expect(page.getByText("Saved. New days use this goal.")).toBeVisible();
-    expect((await userRow(a.username)).dailyTarget).toBe(8);
+    expect((await userRow(a.username)).dailyTarget).toBe(4);
     await page.goto("/today");
-    await expect(page.getByRole("radiogroup")).toHaveCount(8);
+    await expect(page.getByRole("radiogroup")).toHaveCount(4);
   });
 
-  test("F07-E1 stepper by keyboard stays within 1-240", async ({ page }) => {
+  test("F07-E1 stepper by keyboard stays within 1-120", async ({ page }) => {
     await signUp(page);
     await page.goto("/settings");
     const spin = page.getByRole("spinbutton", { name: "Daily target" });
@@ -22,9 +22,9 @@ test.describe("F07 change the default daily target", () => {
     await expect(spin).toHaveAttribute("aria-valuenow", "1");
     await expect(page.getByRole("button", { name: "Fewer quarters" })).toBeDisabled();
     await page.keyboard.press("End");
-    await expect(spin).toHaveAttribute("aria-valuenow", "240");
+    await expect(spin).toHaveAttribute("aria-valuenow", "120");
     await page.keyboard.press("PageDown");
-    await expect(spin).toHaveAttribute("aria-valuenow", "232");
+    await expect(spin).toHaveAttribute("aria-valuenow", "116");
     await expect(page.getByText("Saved. New days use this goal.")).toBeVisible();
   });
 
@@ -32,12 +32,25 @@ test.describe("F07 change the default daily target", () => {
     const a = await signUp(page);
     await rate(page, 1, 1, "Good");
     await page.goto("/settings");
-    await page.getByRole("radio", { name: /^2 qtrs/ }).click();
+    await page.getByRole("radio", { name: /^4 qtrs/ }).click();
     await expect(page.getByText("Saved. New days use this goal.")).toBeVisible();
     await page.goto("/today");
-    await expect(page.getByText(/1\s*of 4 quarters read/)).toBeVisible();
+    await expect(page.getByText(/1\s*of 2 quarters read/)).toBeVisible();
     const { id } = await userRow(a.username);
-    expect((await devDb()).logs.find((l) => l.userId === id)!.target).toBe(4);
+    expect((await devDb()).logs.find((l) => l.userId === id)!.target).toBe(2);
+  });
+
+  test("F07-E3 a quarter is a quarter of a juz: 1, 2 and 4 quarters", async ({ page }) => {
+    await signUp(page);
+    await page.goto("/settings");
+    await expect(page.getByRole("radio", { name: "1 qtrs · a quarter of a juz" })).toBeVisible();
+    await expect(page.getByRole("radio", { name: "2 qtrs · half a juz" })).toBeChecked();
+    await expect(page.getByRole("radio", { name: "4 qtrs · 1 juz" })).toBeVisible();
+    await expect(page.getByText("A juz has 4 quarters")).toBeVisible();
+    // Juz 1 opens on its own, since today's suggestions are in it.
+    await page.goto("/plan");
+    await expect(page.getByRole("button", { name: /^1 Juz 1 ·/ })).toContainText("of 4 picked");
+    await expect(page.getByRole("checkbox", { name: /^Quarter \d$/ })).toHaveCount(4);
   });
 });
 

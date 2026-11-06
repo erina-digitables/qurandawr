@@ -5,21 +5,21 @@ import { useId, useState, type KeyboardEvent } from "react";
 import { cn } from "@/lib/cn";
 import { IconButton } from "./button";
 
-const QUARTERS_PER_JUZ = 8;
+const QUARTERS_PER_JUZ = 4;
 
 export function juzLabel(quarters: number) {
   const juz = quarters / QUARTERS_PER_JUZ;
-  if (juz === 0.125) return "an eighth of a juz";
   if (juz === 0.25) return "a quarter of a juz";
   if (juz === 0.5) return "half a juz";
+  if (juz === 0.75) return "three quarters of a juz";
   if (juz === 1) return "1 juz";
   return `${+juz.toFixed(2)} juz`;
 }
 
-export function TargetStepper({ value, onChange, min = 1, max = 240 }: { value: number; onChange: (n: number) => void; min?: number; max?: number }) {
+export function TargetStepper({ value, onChange, min = 1, max = 120 }: { value: number; onChange: (n: number) => void; min?: number; max?: number }) {
   const set = (n: number) => onChange(Math.min(max, Math.max(min, n)));
   function onKey(e: KeyboardEvent) {
-    const delta = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 8, PageDown: -8 }[e.key];
+    const delta = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: QUARTERS_PER_JUZ, PageDown: -QUARTERS_PER_JUZ }[e.key];
     if (delta) {
       e.preventDefault();
       set(value + delta);
@@ -52,7 +52,7 @@ export function TargetStepper({ value, onChange, min = 1, max = 240 }: { value: 
   );
 }
 
-const presets = [2, 4, 8, 16];
+const presets = [1, 2, 4, 8];
 
 export function PresetChips({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
@@ -108,7 +108,7 @@ export function JuzAccordion({
         <span className="grid size-8 place-items-center rounded-pill bg-surface-2 font-mono text-sm font-bold text-text">{juz}</span>
         <span className="min-w-0 flex-1">
           <span className="block font-display text-base font-extrabold text-text">Juz {juz} · {name}</span>
-          <span className="block text-xs text-text-muted">{count} of 8 picked</span>
+          <span className="block text-xs text-text-muted">{count} of {QUARTERS_PER_JUZ} picked</span>
         </span>
         <span aria-hidden className="hidden gap-1 sm:flex">
           {rubs.map((r) => (

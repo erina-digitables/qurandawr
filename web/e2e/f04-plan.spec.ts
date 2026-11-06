@@ -9,16 +9,16 @@ test.describe("F04 plan a custom day", () => {
     await expectNoHorizontalScroll(page);
     await page.getByRole("button", { name: /^30 Juz 30 ·/ }).click();
     const juz30 = page.getByRole("main").getByRole("listitem").filter({ has: page.getByRole("button", { name: /Juz 30 ·/ }) });
-    await juz30.getByRole("checkbox", { name: "Quarter 7" }).check();
-    await juz30.getByRole("checkbox", { name: "Quarter 8" }).check();
+    await juz30.getByRole("checkbox", { name: "Quarter 3" }).check();
+    await juz30.getByRole("checkbox", { name: "Quarter 4" }).check();
     await expect(page.getByText("2 quarters picked")).toBeVisible();
-    await expect(page.getByText("2 short of your goal")).toBeVisible();
+    await expect(page.getByText("Exactly your daily goal")).toBeVisible();
     await page.getByRole("button", { name: "Start reading" }).click();
     await expect(page).toHaveURL(/\/today/);
     await expect(page.getByText("Showing your plan only.")).toBeVisible();
     await expect(page.getByRole("radiogroup")).toHaveCount(2);
-    await expect(quarterGroup(page, 30, 7)).toBeVisible();
-    await rate(page, 30, 8, "Good");
+    await expect(quarterGroup(page, 30, 3)).toBeVisible();
+    await rate(page, 30, 4, "Good");
     await page.reload();
     await expect(page.getByRole("radiogroup")).toHaveCount(2);
   });
@@ -48,15 +48,15 @@ test.describe("F04 plan a custom day", () => {
   test("F04-E3 picking more than the goal says how many over", async ({ page }) => {
     await signUp(page);
     await page.goto("/plan");
-    await page.getByRole("button", { name: "Next 4 in order" }).click();
-    await page.getByRole("checkbox", { name: "Quarter 6" }).check();
+    await page.getByRole("button", { name: "Next 2 in order" }).click();
+    await page.getByRole("checkbox", { name: "Quarter 4" }).check();
     await expect(page.getByText("1 more than your goal")).toBeVisible();
   });
 
   test("F04-E4 change the plan after locking, then go back to suggestions", async ({ page }) => {
     await signUp(page);
     await page.goto("/plan");
-    await page.getByRole("button", { name: "Next 4 in order" }).click();
+    await page.getByRole("button", { name: "Next 2 in order" }).click();
     await page.getByRole("button", { name: "Start reading" }).click();
     await expect(page.getByText("Showing your plan only.")).toBeVisible();
     await page.getByRole("link", { name: "Edit plan" }).click();
@@ -67,7 +67,7 @@ test.describe("F04 plan a custom day", () => {
     await saved;
     await page.goto("/today");
     await expect(page.getByText("Showing your plan only.")).toHaveCount(0);
-    await expect(page.getByRole("radiogroup")).toHaveCount(4);
+    await expect(page.getByRole("radiogroup")).toHaveCount(2);
   });
 
   test("F04-E5 goal presets on the plan screen change the goal", async ({ page }) => {
@@ -86,11 +86,11 @@ test.describe("F04 plan a custom day", () => {
     await page.getByRole("link", { name: "Previous day" }).click();
     await expect(page.getByText("Nothing logged on this day")).toBeVisible();
     await page.getByRole("link", { name: "Log this day" }).click();
-    await page.getByRole("button", { name: "Next 4 in order" }).click();
+    await page.getByRole("button", { name: "Next 2 in order" }).click();
     await page.getByRole("button", { name: "Start reading" }).click();
     await expect(page.getByText("Yesterday")).toBeVisible();
     await rate(page, 1, 1, "Good");
     await page.goto("/history");
-    await expect(page.getByRole("link", { name: /1\/4/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /1\/2/ })).toBeVisible();
   });
 });

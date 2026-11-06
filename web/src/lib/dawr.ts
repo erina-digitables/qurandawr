@@ -38,7 +38,7 @@ export function streakAtRisk(summaries: DaySummary[], today: ISODate) {
 
 /**
  * The quarters to read when the day has no plan: carry on after the highest
- * quarter finished on the most recent earlier day, wrapping 240 -> 1.
+ * quarter finished on the most recent earlier day, wrapping 120 -> 1.
  */
 export function suggestQuarters(previous: DayLog | undefined, count: number): number[] {
   const done = previous?.quarters.filter((q) => q.quality).map((q) => q.rub) ?? [];

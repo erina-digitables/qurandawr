@@ -1,6 +1,7 @@
 import data from "@/data/quarters.json";
 
-/** One rub' al-hizb. 240 of them, 8 per juz. Start points from quran-meta (Hafs), MIT. */
+/** One quarter of a juz: 120 of them, 4 per juz, starting at the start and the middle of each
+ * hizb. `rub` is its number 1..120. Start points from quran-meta (Hafs), MIT. */
 export type Quarter = {
   rub: number;
   juz: number;
@@ -13,8 +14,8 @@ export type Quarter = {
   surahName: string;
 };
 
-export const QUARTERS_PER_JUZ = 8;
-export const TOTAL_QUARTERS = 240;
+export const QUARTERS_PER_JUZ = 4;
+export const TOTAL_QUARTERS = 120;
 export const quarters = data as Quarter[];
 
 export function quarter(rub: number): Quarter {
@@ -39,9 +40,9 @@ export function juzQuarters(juz: number) {
 
 export function juzLabel(count: number) {
   const juz = count / QUARTERS_PER_JUZ;
-  if (juz === 0.125) return "an eighth of a juz";
   if (juz === 0.25) return "a quarter of a juz";
   if (juz === 0.5) return "half a juz";
+  if (juz === 0.75) return "three quarters of a juz";
   if (juz === 1) return "1 juz";
   return `${+juz.toFixed(2)} juz`;
 }

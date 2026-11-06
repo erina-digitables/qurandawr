@@ -2,7 +2,7 @@
 
 Keep your hifz fresh, one quarter at a time.
 
-Dawr is a daily revision tracker for people who have memorised the Quran, or are memorising it. The Quran is split into 240 quarters (rub'). You set how many quarters you revise a day, rate each one as you finish it, and Dawr keeps the streak, the history and the weak spots for you.
+Dawr is a daily revision tracker for people who have memorised the Quran, or are memorising it. Each juz is split into 4 quarters, 120 in the whole Quran. You set how many quarters you revise a day, rate each one as you finish it, and Dawr keeps the streak, the history and the weak spots for you.
 
 Live at **https://dawr.hifzapp.link**
 
@@ -46,7 +46,7 @@ To run it on a real Postgres on your computer:
 npm run db:local      # a local Postgres on port 54329, with the same roles as the server
 ```
 
-Then, in a second terminal, put these in `web/.env.local` (local-only passwords, set by `db:local`) and run `npm run db:migrate` to create the tables and the 240 quarters:
+Then, in a second terminal, put these in `web/.env.local` (local-only passwords, set by `db:local`) and run `npm run db:migrate` to create the tables and the 120 quarters:
 
 ```
 DATABASE_URL=postgres://dawr_app:local-app@127.0.0.1:54329/dawr

@@ -36,7 +36,7 @@ export function Gallery({ theme }: { theme: "light" | "dark" }) {
   const [authTab, setAuthTab] = useState<"in" | "up">("in");
   const [nav, setNav] = useState<"today" | "stats" | "history">("today");
   const [q, setQ] = useState<Record<number, Quality | null>>({ 1: "good", 2: "average", 3: null, 4: null });
-  const [target, setTarget] = useState(4);
+  const [target, setTarget] = useState(2);
   const [picked, setPicked] = useState(new Set([9, 10, 11, 12]));
   const [bar, setBar] = useState(3);
   const done = Object.values(q).filter(Boolean).length;
@@ -120,7 +120,7 @@ export function Gallery({ theme }: { theme: "light" | "dark" }) {
       </Section>
 
       <Section title="Goal card (S04)">
-        <GoalCard title="Juz 2 · quarters 1-4" done={done} target={4} />
+        <GoalCard title="Juz 2 · quarters 1-2" done={done} target={2} />
         <GoalCard title="Juz 1 · quarters 5-8" done={4} target={4} />
         <ProgressBar value={0} max={4} label="Empty progress example" />
       </Section>
@@ -167,8 +167,8 @@ export function Gallery({ theme }: { theme: "light" | "dark" }) {
 
       <Section title="Statistics (S06)">
         <div className="grid grid-cols-2 gap-3">
-          <StatCard label="This month" value="38" unit="qtrs" sub="≈ 4.8 juz · 9 goal days" icon={<BookOpen />} />
-          <StatCard label="This year" value="412" unit="qtrs" sub="≈ 51.5 juz" icon={<Award />} />
+          <StatCard label="This month" value="38" unit="qtrs" sub="≈ 9.5 juz · 9 goal days" icon={<BookOpen />} />
+          <StatCard label="This year" value="412" unit="qtrs" sub="≈ 103 juz" icon={<Award />} />
         </div>
         <Card>
           <WeeklyBarChart data={week} goal={4} selected={bar} onSelect={setBar} />

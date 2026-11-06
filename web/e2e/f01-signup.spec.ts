@@ -1,12 +1,13 @@
 import { devDb, expect, expectNoA11yViolations, ipFor, newAccount, signUp, test } from "./fixtures";
 
 test.describe("F01 new user signs up and starts revising", () => {
-  test("F01-H1 sign up lands on Today with the default goal of 4", async ({ page }) => {
+  test("F01-H1 sign up lands on Today with the default goal of 2, half a juz", async ({ page }) => {
     await page.goto("/signup");
     await expectNoA11yViolations(page);
     const a = await signUp(page);
     await expect(page.getByText("Today's portion")).toBeVisible();
-    await expect(page.getByRole("radiogroup", { name: /^How did Juz \d+ · quarter \d+ go\?$/ })).toHaveCount(4);
+    await expect(page.getByRole("radiogroup", { name: /^How did Juz \d+ · quarter \d+ go\?$/ })).toHaveCount(2);
+    await expect(page.getByText("Juz 1 · quarters 1-2")).toBeVisible();
     await expect(page.getByText(a.email)).toBeVisible();
     await expectNoA11yViolations(page);
   });

@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 3100;
+const PORT = Number(process.env.E2E_PORT) || 3100; // E2E_PORT if 3100 is taken
 
 // The suite runs against a production build on its own port, data folder and build
 // folder, so it never touches `npm run dev` or your dev data in .data/.

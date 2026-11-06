@@ -6,7 +6,7 @@ import { savePlan, setDailyTarget, startReading } from "@/app/actions/dawr";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/feedback";
 import { JuzAccordion, PresetChips, TargetStepper } from "@/components/ui/target";
-import { juzLabel, quarter, quarters } from "@/lib/quarters";
+import { juzLabel, quarter, quarters, QUARTERS_PER_JUZ } from "@/lib/quarters";
 
 const JUZ = Array.from({ length: 30 }, (_, i) => i + 1);
 
@@ -135,7 +135,7 @@ export function PlanBuilder({
           <ul className="flex flex-col gap-2">
             {visibleJuz.map((j) => (
               <li key={j}>
-                <JuzAccordion juz={j} name={quarters[(j - 1) * 8].juzName} selected={picked} onToggle={toggle} defaultOpen={openJuz.has(j) || visibleJuz.length === 1} />
+                <JuzAccordion juz={j} name={quarters[(j - 1) * QUARTERS_PER_JUZ].juzName} selected={picked} onToggle={toggle} defaultOpen={openJuz.has(j) || visibleJuz.length === 1} />
               </li>
             ))}
           </ul>

@@ -1,6 +1,7 @@
 // Every input from the browser is parsed here before it reaches the backend.
 import { z } from "zod";
 import { isValidDate } from "./dates";
+import { TOTAL_QUARTERS } from "./quarters";
 
 export const username = z
   .string()
@@ -23,9 +24,9 @@ export const timezone = z
     }
   }, "Pick a time zone from the list.");
 export const date = z.string().refine(isValidDate, "Invalid date");
-export const rub = z.number().int().min(1).max(240);
+export const rub = z.number().int().min(1).max(TOTAL_QUARTERS);
 export const quality = z.enum(["good", "average", "needs_work"]);
-export const target = z.number().int().min(1).max(240);
+export const target = z.number().int().min(1).max(TOTAL_QUARTERS);
 export const theme = z.enum(["system", "light", "dark"]);
 export const resetCode = z
   .string()
@@ -49,7 +50,7 @@ export const dayLog = z.object({
         completedAt: z.iso.datetime({ offset: true }).nullable(),
       }),
     )
-    .max(240),
+    .max(TOTAL_QUARTERS),
 });
 
 /** FormData -> plain object of strings, for zod. */

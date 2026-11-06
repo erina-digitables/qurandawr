@@ -50,7 +50,7 @@ function createUser(input: SignUpInput & { isDemo?: boolean }): UserRow {
     fullName: input.fullName.trim(),
     username: input.username.toLowerCase(),
     email: input.email.trim().toLowerCase(),
-    dailyTarget: 4,
+    dailyTarget: 2,
     timezone: input.timezone,
     theme: "system",
     isDemo: !!input.isDemo,
@@ -300,7 +300,7 @@ export const fakeBackend: Backend = {
 
 /** Two weeks of believable history ending yesterday. Shared by both backends. */
 export function demoDays(today: ISODate): DayLog[] {
-  const pattern = [4, 4, 5, 0, 4, 3, 4, 4, 6, 4, 2, 4, 4]; // oldest first
+  const pattern = [2, 2, 3, 0, 2, 1, 2, 2, 3, 2, 1, 2, 2]; // oldest first
   const qualities: Quality[] = ["good", "good", "average", "good", "needs_work", "good"];
   let rub = 1;
   const days: DayLog[] = [];
@@ -312,7 +312,7 @@ export function demoDays(today: ISODate): DayLog[] {
       rub = (rub % TOTAL_QUARTERS) + 1;
       return q;
     });
-    days.push({ date, target: 4, planLocked: false, quarters });
+    days.push({ date, target: 2, planLocked: false, quarters });
   });
   return days;
 }
