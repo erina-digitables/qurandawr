@@ -4,9 +4,9 @@
 
 /* next/font hands us hashed family names; put them at the front of the token stacks. */
 :root {
-  --t-font-display: var(--font-manrope), Inter, system-ui, sans-serif;
+  --t-font-display: var(--font-lexend), system-ui, sans-serif;
   --t-font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --t-font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --t-font-mono: var(--font-lexend), ui-monospace, monospace;
 }
 
 @layer base {
@@ -18,6 +18,14 @@
     color: var(--color-text);
     font-family: var(--font-sans);
   }
+  /* Numbers line up in columns wherever the "mono" role is used. */
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .font-display {
+    letter-spacing: -0.01em;
+  }
   :focus-visible {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
@@ -28,7 +36,6 @@
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: var(--color-text-muted);
 }

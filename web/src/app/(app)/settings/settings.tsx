@@ -15,6 +15,7 @@ import {
 } from "@/app/actions/dawr";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/feedback";
+import type { Tone } from "@/components/ui/stats";
 import { Segmented } from "@/components/ui/segmented";
 import { PresetChips, TargetStepper } from "@/components/ui/target";
 import { TextField } from "@/components/ui/text-field";
@@ -28,7 +29,7 @@ export function Settings({ profile, initialTab }: { profile: Profile; initialTab
   const [tab, setTab] = useState<Tab>(initialTab);
   return (
     <>
-      <h1 className="sr-only">Settings</h1>
+      <h1 className="px-1 font-display text-display text-text">Settings</h1>
       <Segmented
         label="Settings sections"
         value={tab}
@@ -89,7 +90,7 @@ function GoalPanel({ target: initial }: { target: number }) {
   return (
     <Card className="flex flex-col gap-4">
       <div>
-        <h2 className="font-display text-base font-extrabold text-text">Daily goal</h2>
+        <h2 className="font-display text-lg text-text">Daily goal</h2>
         <p className="text-sm text-text-muted">
           {target} {target === 1 ? "quarter" : "quarters"} is {juzLabel(target)}. A juz has 4 quarters, so 4 a day finishes the Quran in a month.
         </p>
@@ -107,9 +108,9 @@ function CopyField({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = useState(false);
   const id = useId();
   return (
-    <div className="flex items-center gap-2 rounded-md border border-border bg-surface-2 px-3 py-2">
+    <div className="flex items-center gap-2 rounded-lg bg-surface-2 py-2 pl-5 pr-2">
       <div className="min-w-0 flex-1">
-        <p id={id} className="eyebrow">
+        <p id={id} className="text-xs font-bold text-text-muted">
           {label}
         </p>
         <p className="truncate text-base text-text">{value}</p>
@@ -123,7 +124,7 @@ function CopyField({ label, value }: { label: string; value: string }) {
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
         }}
-        className="grid size-11 place-items-center rounded-pill text-text-muted hover:text-text"
+        className="grid size-11 place-items-center rounded-pill bg-surface text-text hover:bg-surface-2"
       >
         {copied ? <Check aria-hidden className="size-4 text-success" /> : <Copy aria-hidden className="size-4" />}
       </button>
@@ -150,7 +151,7 @@ function ThemeChoice({ current }: { current: Theme }) {
   }
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="eyebrow mb-1">Appearance</legend>
+      <legend className="mb-1 px-1 text-sm font-bold text-text">Appearance</legend>
       <div role="radiogroup" aria-label="Appearance" className="grid grid-cols-3 gap-2">
         {options.map((o) => (
           <button
@@ -160,8 +161,8 @@ function ThemeChoice({ current }: { current: Theme }) {
             aria-checked={theme === o.value}
             onClick={() => pick(o.value)}
             className={cn(
-              "flex min-h-11 flex-col items-center justify-center gap-1 rounded-md border px-2 py-2 text-sm font-bold",
-              theme === o.value ? "border-accent bg-accent text-on-accent" : "border-border bg-surface-2 text-text",
+              "flex min-h-16 flex-col items-center justify-center gap-1 rounded-lg border-2 px-2 py-2 text-sm font-bold",
+              theme === o.value ? "border-accent bg-accent text-on-accent" : "border-transparent bg-surface-2 text-text hover:border-border-input",
             )}
           >
             {o.icon}
@@ -189,9 +190,9 @@ function AccountPanel({ profile }: { profile: Profile }) {
   return (
     <>
       <Card className="flex flex-col gap-4">
-        <h2 className="font-display text-base font-extrabold text-text">Profile</h2>
+        <h2 className="font-display text-lg text-text">Profile</h2>
         {profile.isDemo && (
-          <p className="rounded-md border border-highlight/30 bg-highlight-soft px-3 py-2 text-sm text-text">
+          <p className="rounded-lg bg-sand px-4 py-3 text-sm font-semibold text-ink">
             This is a temporary sample account. Create your own to keep your progress.
           </p>
         )}
@@ -199,20 +200,20 @@ function AccountPanel({ profile }: { profile: Profile }) {
           <TextField label="Your name" name="fullName" defaultValue={profile.fullName} maxLength={80} error={state?.fields?.fullName} />
           <TextField label="Username" name="username" defaultValue={profile.username} autoCapitalize="none" error={state?.fields?.username} />
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="tz" className="eyebrow">
+            <label htmlFor="tz" className="px-1 text-sm font-bold text-text">
               Time zone
             </label>
             <select
               id="tz"
               name="timezone"
               defaultValue={profile.timezone}
-              className="h-11 rounded-md border border-border-input bg-surface-2 px-3 text-base text-text"
+              className="h-13 rounded-pill border border-border-input bg-surface-2 px-5 text-base text-text"
             >
               {zones.map((z) => (
                 <option key={z}>{z}</option>
               ))}
             </select>
-            <p className="text-xs text-text-muted">Your day starts at midnight here. Logged days keep their dates if you change it.</p>
+            <p className="px-1 text-xs text-text-muted">Your day starts at midnight here. Logged days keep their dates if you change it.</p>
           </div>
           <div className="flex items-center gap-3">
             <SubmitButton>Save profile</SubmitButton>
@@ -224,7 +225,7 @@ function AccountPanel({ profile }: { profile: Profile }) {
       </Card>
 
       <Card className="flex flex-col gap-4">
-        <h2 className="font-display text-base font-extrabold text-text">Change password</h2>
+        <h2 className="font-display text-lg text-text">Change password</h2>
         <form action={pwAction} className="flex flex-col gap-4">
           <TextField label="Current password" name="current" variant="password" autoComplete="current-password" error={pw?.fields?.current} />
           <TextField label="New password" name="next" variant="password" autoComplete="new-password" error={pw?.fields?.next} hint="At least 8 characters." />
@@ -235,9 +236,12 @@ function AccountPanel({ profile }: { profile: Profile }) {
         </form>
       </Card>
 
-      <Card className="flex flex-col gap-5 border-danger/40">
-        <h2 className="flex items-center gap-2 font-display text-base font-extrabold text-danger">
-          <TriangleAlert aria-hidden className="size-5" /> Danger zone
+      <Card className="flex flex-col gap-5 border-2 border-clay">
+        <h2 className="flex items-center gap-3 font-display text-lg text-text">
+          <span aria-hidden className="grid size-10 place-items-center rounded-pill bg-clay text-ink">
+            <TriangleAlert className="size-5" />
+          </span>
+          Danger zone
         </h2>
         <form action={resetAction} className="flex flex-col gap-3">
           <p className="text-sm text-text-muted">Delete every logged day and start your history over. Your account and goal stay.</p>
@@ -247,7 +251,7 @@ function AccountPanel({ profile }: { profile: Profile }) {
             <Saved state={reset} />
           </div>
         </form>
-        <form action={delAction} className="flex flex-col gap-3 border-t border-border pt-5">
+        <form action={delAction} className="flex flex-col gap-3 border-t-2 border-dashed border-border pt-5">
           <p className="text-sm text-text-muted">Delete your account and everything in it. This can&apos;t be undone.</p>
           <TextField label={`Type ${profile.username} to confirm`} name="confirm" autoCapitalize="none" autoComplete="off" error={del?.fields?.confirm} />
           <div>
@@ -259,18 +263,21 @@ function AccountPanel({ profile }: { profile: Profile }) {
   );
 }
 
-const tips = [
+const tips: { title: string; body: string; tone: Tone }[] = [
   {
     title: "Little and often beats a weekly marathon",
     body: "Half a juz every day keeps more in memory than three juz once a week. Set a goal you can hit on a busy day.",
+    tone: "wheat",
   },
   {
     title: "Rate honestly",
     body: "Good means smooth, with a slip or two at most. Okay means you needed a couple of prompts. Weak means it needs another read soon, so plan it for tomorrow.",
+    tone: "slate",
   },
   {
     title: "Split it around the prayers",
     body: "Two quarters after Fajr and two after Maghrib or Isha feels lighter than four in one sitting.",
+    tone: "sage",
   },
 ];
 
@@ -278,9 +285,9 @@ function TipsPanel() {
   return (
     <ul className="flex flex-col gap-3">
       {tips.map((t) => (
-        <li key={t.title} className="rounded-lg border border-border bg-surface p-4">
-          <h2 className="font-display text-base font-extrabold text-text">{t.title}</h2>
-          <p className="mt-1 text-sm text-text-muted">{t.body}</p>
+        <li key={t.title} className={cn("rounded-xl p-5 text-ink", { wheat: "bg-wheat", slate: "bg-slate", sage: "bg-sage" }[t.tone as "wheat" | "slate" | "sage"])}>
+          <h2 className="font-display text-lg">{t.title}</h2>
+          <p className="mt-1 text-sm text-ink/80">{t.body}</p>
         </li>
       ))}
     </ul>

@@ -39,7 +39,7 @@ export function Segmented<T extends string>({
       aria-label={label}
       className={cn(
         "flex",
-        variant === "track" ? "gap-1 rounded-lg border border-border bg-surface-2 p-1" : "border-b border-border",
+        variant === "track" ? "gap-1 rounded-pill bg-surface p-1 shadow-card" : "border-b border-border",
         className,
       )}
     >
@@ -60,9 +60,7 @@ export function Segmented<T extends string>({
             className={cn(
               "flex min-h-11 flex-1 items-center justify-center gap-2 px-3 text-sm font-bold transition-colors duration-(--t-duration-fast) [&_svg]:size-4",
               variant === "track" &&
-                (selected
-                  ? "rounded-md border border-border bg-surface text-text shadow-card"
-                  : "rounded-md border border-transparent text-text-muted hover:text-text"),
+                (selected ? "rounded-pill bg-accent text-on-accent" : "rounded-pill text-text-muted hover:text-text"),
               variant === "underline" &&
                 (selected ? "-mb-px border-b-2 border-accent text-text" : "text-text-muted hover:text-text"),
             )}

@@ -86,13 +86,13 @@ export function DayList({ days, today, selected, searchable = true }: { days: Da
       {searchable && (
         <label className="relative block">
           <span className="sr-only">Search by date or juz</span>
-          <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-muted" />
+          <Search aria-hidden className="pointer-events-none absolute left-5 top-1/2 size-4 -translate-y-1/2 text-text-muted" />
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search: October, 2026-10-29 or juz 3"
-            className="h-11 w-full rounded-md border border-border-input bg-surface-2 pl-9 pr-3 text-base text-text placeholder:text-text-muted/70 focus-visible:bg-surface"
+            className="h-13 w-full rounded-pill border border-border-input bg-surface pl-11 pr-4 text-base text-text placeholder:text-text-muted"
           />
         </label>
       )}
@@ -139,7 +139,7 @@ export function DayList({ days, today, selected, searchable = true }: { days: Da
           {error}
         </p>
       )}
-      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-10 flex justify-center px-4">
+      <div className="pointer-events-none fixed inset-x-0 bottom-28 z-30 flex justify-center px-4">
         <div
           className="pointer-events-auto w-full max-w-sm"
           onPointerEnter={() => setHolding(true)}

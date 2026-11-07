@@ -62,11 +62,14 @@ export function TodayBoard({ date, target, title, eyebrow, items }: { date: stri
     <>
       <GoalCard title={title} done={done} target={target} eyebrow={eyebrow} />
       <section aria-labelledby="checklist-title" className="flex flex-col gap-3">
-        <div className="flex items-center justify-between gap-2 px-1">
-          <h2 id="checklist-title" className="eyebrow">
-            Rate each quarter as you finish it
-          </h2>
-          <span className="font-mono text-xs font-bold text-text-muted">
+        <div className="flex items-end justify-between gap-3 px-1 pt-1">
+          <div>
+            <h2 id="checklist-title" className="font-display text-lg text-text">
+              Rate each quarter as you finish it
+            </h2>
+            <p className="text-sm text-text-muted">Good, Okay or Weak. It saves as you tap.</p>
+          </div>
+          <span className="shrink-0 rounded-pill bg-surface px-3 py-1.5 font-mono text-sm font-bold text-text shadow-card">
             {done}/{items.length}
           </span>
         </div>
@@ -82,9 +85,9 @@ export function TodayBoard({ date, target, title, eyebrow, items }: { date: stri
             error={failed.has(i.rub)}
           />
         ))}
-        <p className="px-1 text-xs text-text-muted">Ratings save as you tap. Weak quarters are worth another read tomorrow.</p>
+        <p className="px-1 text-xs text-text-muted">Weak quarters are worth another read tomorrow.</p>
       </section>
-      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-10 flex justify-center px-4">
+      <div className="pointer-events-none fixed inset-x-0 bottom-28 z-30 flex justify-center px-4">
         <div className="pointer-events-auto w-full max-w-sm">{toast && <Toast tone="error">{toast}</Toast>}</div>
       </div>
     </>

@@ -7,10 +7,11 @@ import { CodeTag } from "./badge";
 
 export type Quality = "good" | "average" | "needs_work";
 
-const options: { value: Quality; label: string; on: string; off: string }[] = [
-  { value: "good", label: "Good", on: "bg-solid-success border-solid-success", off: "text-success border-success/40" },
-  { value: "average", label: "Okay", on: "bg-solid-warning border-solid-warning", off: "text-warning border-warning/40" },
-  { value: "needs_work", label: "Weak", on: "bg-solid-danger border-solid-danger", off: "text-danger border-danger/40" },
+// Each rating owns a tone. Unpicked they show a dot of it; picked they fill with it.
+const options: { value: Quality; label: string; on: string; dot: string }[] = [
+  { value: "good", label: "Good", on: "bg-sage", dot: "bg-sage" },
+  { value: "average", label: "Okay", on: "bg-sand", dot: "bg-sand" },
+  { value: "needs_work", label: "Weak", on: "bg-clay", dot: "bg-clay" },
 ];
 
 export function QualityGroup({
@@ -58,11 +59,11 @@ export function QualityGroup({
               onClick={() => onChange(o.value)}
               onKeyDown={(e) => onKey(e, i)}
               className={cn(
-                "inline-flex h-11 items-center justify-center gap-1 rounded-md border text-sm font-bold transition-colors duration-(--t-duration-fast) disabled:opacity-50",
-                checked ? cn(o.on, "text-on-solid") : cn("bg-surface hover:bg-surface-2", o.off),
+                "inline-flex h-12 items-center justify-center gap-1.5 rounded-pill border-2 text-sm font-bold transition-colors duration-(--t-duration-fast) disabled:opacity-50",
+                checked ? cn(o.on, "border-ink text-ink") : "border-transparent bg-surface-2 text-text hover:border-border-input",
               )}
             >
-              {checked && <Check aria-hidden className="size-4" />}
+              {checked ? <Check aria-hidden className="size-4" /> : <span aria-hidden className={cn("size-2.5 rounded-pill", o.dot)} />}
               {o.label}
             </button>
           );
@@ -105,22 +106,22 @@ export function QuarterCard({
     <fieldset
       aria-labelledby={legendId}
       className={cn(
-        "flex min-w-0 flex-col gap-4 rounded-md border p-4 transition-colors duration-(--t-duration-base)",
-        error ? "border-danger bg-surface" : done ? "border-success/50 bg-success-soft" : "border-border bg-surface",
+        "flex min-w-0 flex-col gap-4 rounded-lg border-2 bg-surface p-4 shadow-card transition-colors duration-(--t-duration-base)",
+        error ? "border-danger" : done ? "border-sage" : "border-transparent",
       )}
     >
       <div className="flex items-start gap-3">
         <span
           aria-hidden
           className={cn(
-            "grid size-8 shrink-0 place-items-center rounded-pill border-2",
-            done ? "border-solid-success bg-solid-success text-on-solid" : "border-border-input text-transparent",
+            "grid size-10 shrink-0 place-items-center rounded-pill border-2",
+            done ? "border-ink bg-sage text-ink" : "border-border-input text-transparent",
           )}
         >
           {saving ? <Loader2 className="size-4 animate-spin text-text-muted" /> : <Check className="size-4" />}
         </span>
         <div className="min-w-0 flex-1">
-          <legend id={legendId} className="font-display text-base font-extrabold text-text">
+          <legend id={legendId} className="font-display text-lg text-text">
             {title}
           </legend>
           <p className="text-sm text-text-muted">{subtitle}</p>

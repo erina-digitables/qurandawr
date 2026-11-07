@@ -4,7 +4,7 @@ import { backend } from "@/lib/data";
 import { addDays, formatDay, relativeLabel } from "@/lib/dates";
 import { suggestQuarters } from "@/lib/dawr";
 import { pickDate, requireUser, userToday } from "@/lib/session";
-import { DayTabs } from "../day-tabs";
+import { DayTabs, DayWeek } from "../day-tabs";
 import { PlanBuilder } from "./plan-builder";
 
 export const metadata: Metadata = { title: "Plan the day" };
@@ -13,7 +13,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
   const user = await requireUser();
   const date = pickDate(user, (await searchParams).date);
   const today = userToday(user);
-  const [day, previous] = await Promise.all([backend.getDay(user.id, date), backend.previousActiveDay(user.id, date)]);
+  const [day, previous, days] = await Promise.all([backend.getDay(user.id, date), backend.previousActiveDay(user.id, date), backend.listDays(user.id)]);
   const planned = day?.quarters.filter((q) => q.planned).map((q) => q.rub) ?? [];
   const done = day?.quarters.filter((q) => q.quality).map((q) => q.rub) ?? [];
 
@@ -27,6 +27,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
         nextHref={`/plan?date=${addDays(date, 1)}`}
         isToday={date === today}
       />
+      <DayWeek base="/plan" date={date} today={today} days={days} />
       <DayTabs active="plan" date={date} />
       <PlanBuilder
         key={date}

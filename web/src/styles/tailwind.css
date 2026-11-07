@@ -26,6 +26,17 @@
   --color-solid-warning: var(--t-solid-warning);
   --color-solid-danger: var(--t-solid-danger);
   --color-on-solid: var(--t-on-solid);
+  --color-ink: var(--t-ink);
+  --color-white: var(--t-white);
+  --color-sand: var(--t-sand);
+  --color-stone: var(--t-stone);
+  --color-slate: var(--t-slate);
+  --color-sage: var(--t-sage);
+  --color-wheat: var(--t-wheat);
+  --color-clay: var(--t-clay);
+  --color-moss: var(--t-moss);
+  --color-mist: var(--t-mist);
+  --color-forest: var(--t-forest);
 
   --font-display: var(--t-font-display);
   --font-sans: var(--t-font-sans);

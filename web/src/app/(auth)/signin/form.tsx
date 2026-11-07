@@ -20,7 +20,7 @@ export function SignInForm({ notice }: { notice?: string }) {
       <h1 className="sr-only">Sign in</h1>
       <form action={action} className="flex flex-col gap-4" noValidate>
         {notice && notices[notice] && !state?.error && (
-          <p role="status" className="rounded-md border border-highlight/30 bg-highlight-soft px-3 py-2 text-sm text-text">
+          <p role="status" className="rounded-lg bg-sand px-4 py-3 text-sm font-semibold text-ink">
             {notices[notice]}
           </p>
         )}
@@ -37,7 +37,7 @@ export function SignInForm({ notice }: { notice?: string }) {
         />
         <div className="flex flex-col gap-1">
           <TextField label="Password" name="password" icon={<KeyRound />} variant="password" autoComplete="current-password" required />
-          <Link href="/forgot" className="self-end rounded-sm py-1 text-sm font-bold text-accent underline-offset-2 hover:underline">
+          <Link href="/forgot" className="self-end rounded-sm py-1 text-sm font-bold text-text underline underline-offset-2">
             Forgot your password?
           </Link>
         </div>

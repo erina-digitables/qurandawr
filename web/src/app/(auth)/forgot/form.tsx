@@ -27,7 +27,7 @@ export function ForgotForm() {
         <SubmitButton icon={<Send aria-hidden className="size-4" />}>Send me a code</SubmitButton>
       </form>
       <div className="mt-6 flex flex-col items-center gap-2 border-t border-border pt-6 text-sm">
-        <Link href="/forgot/code" className="font-bold text-accent underline-offset-2 hover:underline">
+        <Link href="/forgot/code" className="font-bold text-text underline underline-offset-2">
           I already have a code
         </Link>
         <Link href="/signin" className="inline-flex items-center gap-1 text-text-muted hover:text-text">

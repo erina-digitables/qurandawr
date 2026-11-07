@@ -21,12 +21,12 @@ export function TextField({ label, icon, error, hint, variant = "plain", classNa
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={inputId} className="eyebrow">
+      <label htmlFor={inputId} className="px-1 text-sm font-bold text-text">
         {label}
       </label>
       <div className="relative">
         {icon && (
-          <span aria-hidden className="pointer-events-none absolute inset-y-0 left-3 grid place-items-center text-text-muted [&_svg]:size-4">
+          <span aria-hidden className="pointer-events-none absolute inset-y-0 left-5 grid place-items-center text-text-muted [&_svg]:size-4">
             {icon}
           </span>
         )}
@@ -36,11 +36,11 @@ export function TextField({ label, icon, error, hint, variant = "plain", classNa
           aria-invalid={error ? true : undefined}
           aria-describedby={error || hint ? msgId : undefined}
           className={cn(
-            "h-11 w-full rounded-md border bg-surface-2 px-3 text-base text-text placeholder:text-text-muted/70",
+            "h-13 w-full rounded-pill border bg-surface-2 px-5 text-base text-text placeholder:text-text-muted/70",
             "transition-colors duration-(--t-duration-fast) focus-visible:bg-surface",
             error ? "border-danger" : "border-border-input",
-            !!icon && "pl-9",
-            variant === "password" && "pr-12",
+            !!icon && "pl-11",
+            variant === "password" && "pr-14",
             variant === "code" && "font-mono uppercase tracking-[0.2em]",
             "disabled:opacity-50",
           )}
@@ -52,14 +52,14 @@ export function TextField({ label, icon, error, hint, variant = "plain", classNa
             aria-label="Show password"
             aria-pressed={shown}
             onClick={() => setShown((s) => !s)}
-            className="absolute inset-y-0 right-0 grid w-11 place-items-center rounded-md text-text-muted hover:text-text [&_svg]:size-4"
+            className="absolute inset-y-0 right-1 grid w-12 place-items-center rounded-pill text-text-muted hover:text-text [&_svg]:size-4"
           >
             {shown ? <EyeOff aria-hidden /> : <Eye aria-hidden />}
           </button>
         )}
       </div>
       {(error || hint) && (
-        <p id={msgId} className={cn("text-xs", error ? "text-danger" : "text-text-muted")}>
+        <p id={msgId} className={cn("px-1 text-xs", error ? "text-danger" : "text-text-muted")}>
           {error ?? hint}
         </p>
       )}

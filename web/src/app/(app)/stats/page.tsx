@@ -24,8 +24,11 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
 
   return (
     <>
-      <h1 className="sr-only">Progress</h1>
+      <h1 className="px-1 font-display text-display text-text">
+        Your <span className="font-normal text-text-muted">progress</span>
+      </h1>
       <DateNavigator
+        size="md"
         label={`Week of ${formatDay(s.weekStart, { day: "numeric", month: "short" })}`}
         date={date === today ? "this week" : formatDay(date, { day: "numeric", month: "short", year: "numeric" })}
         prevHref={`/stats?date=${addDays(s.weekStart, -1)}`}
@@ -33,20 +36,21 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
         isToday={weekEnd >= today}
       />
       <div className="grid grid-cols-2 gap-3">
-        <StatCard label={monthName} value={String(s.monthTotal)} unit="qtrs" sub={`≈ ${juzLabel(s.monthTotal)} · ${s.monthGoalDays} goal days`} icon={<BookOpen />} />
-        <StatCard label={date.slice(0, 4)} value={String(s.yearTotal)} unit="qtrs" sub={`≈ ${juzLabel(s.yearTotal)}`} icon={<Award />} />
-        <StatCard label="Streak" value={String(streak(days, today))} unit="days" sub="Days in a row with the goal met" icon={<Flame />} />
+        <StatCard label={monthName} value={String(s.monthTotal)} unit="qtrs" sub={`≈ ${juzLabel(s.monthTotal)} · ${s.monthGoalDays} goal days`} icon={<BookOpen />} tone="wheat" />
+        <StatCard label={date.slice(0, 4)} value={String(s.yearTotal)} unit="qtrs" sub={`≈ ${juzLabel(s.yearTotal)}`} icon={<Award />} tone="mist" />
+        <StatCard label="Streak" value={String(streak(days, today))} unit="days" sub="Days in a row with the goal met" icon={<Flame />} tone="sand" />
         <StatCard
           label="This week"
           value={String(s.weekTotal)}
           unit="qtrs"
           sub={`${s.weekAverage.toFixed(1)} a day on average`}
           icon={<CalendarRange />}
+          tone="sage"
         />
       </div>
-      <section aria-labelledby="week-title" className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-4 sm:p-6">
+      <section aria-labelledby="week-title" className="flex flex-col gap-6 rounded-xl bg-surface p-5 shadow-card sm:p-6">
         <div>
-          <h2 id="week-title" className="font-display text-base font-extrabold text-text">
+          <h2 id="week-title" className="font-display text-lg text-text">
             Quarters each day
           </h2>
           <p className="text-sm text-text-muted">Tap a day to open its checklist. The dashed line is your goal of {user.dailyTarget}.</p>
@@ -54,7 +58,7 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
         <WeekChart week={s.week} goal={user.dailyTarget} selected={date} />
       </section>
       <section aria-labelledby="week-days-title" className="flex flex-col gap-3">
-        <h2 id="week-days-title" className="eyebrow px-1">
+        <h2 id="week-days-title" className="px-1 font-display text-lg text-text">
           Logged this week
         </h2>
         <DayList days={weekDays} today={today} selected={date} searchable={false} />

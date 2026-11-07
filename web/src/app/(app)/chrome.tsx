@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, CheckSquare, History } from "lucide-react";
+import { BarChart3, History, House, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
@@ -16,7 +16,6 @@ function effectiveTheme(): "light" | "dark" {
 }
 
 export function Chrome({ email, streak, atRisk }: { email: string; streak: number; atRisk: boolean }) {
-  const pathname = usePathname();
   const [theme, setLocal] = useState<"light" | "dark">("light");
   const [, start] = useTransition();
   useEffect(() => setLocal(effectiveTheme()), []);
@@ -28,26 +27,22 @@ export function Chrome({ email, streak, atRisk }: { email: string; streak: numbe
     start(() => setTheme(next));
   }
 
-  const active = pathname.startsWith("/history") ? "history" : pathname.startsWith("/settings") ? "settings" : undefined;
-
-  return (
-    <>
-      <AppHeader email={email} streak={streak} atRisk={atRisk} theme={theme} onToggleTheme={toggle} signOutAction={signOut} active={active} />
-      <TopNav pathname={pathname} />
-    </>
-  );
+  return <AppHeader email={email} streak={streak} atRisk={atRisk} theme={theme} onToggleTheme={toggle} signOutAction={signOut} />;
 }
 
 const links = [
-  { href: "/today", label: "Today", icon: CheckSquare, match: ["/today", "/plan"] },
+  { href: "/today", label: "Today", icon: House, match: ["/today", "/plan"] },
   { href: "/stats", label: "Progress", icon: BarChart3, match: ["/stats"] },
   { href: "/history", label: "History", icon: History, match: ["/history"] },
+  { href: "/settings", label: "Settings", icon: Settings, match: ["/settings"] },
 ];
 
-function TopNav({ pathname }: { pathname: string }) {
+/** Floating forest-green bar at the bottom: every screen is one thumb away. */
+export function BottomNav() {
+  const pathname = usePathname();
   return (
-    <nav aria-label="Main" className="rounded-lg border border-border bg-surface-2 p-1">
-      <ul className="flex gap-1">
+    <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-20 px-4 pb-[max(12px,env(safe-area-inset-bottom))]">
+      <ul className="mx-auto flex max-w-(--container-column) gap-1 rounded-pill bg-forest p-1.5 shadow-pop dark:bg-surface-2 dark:ring-1 dark:ring-white/10">
         {links.map(({ href, label, icon: Icon, match }) => {
           const on = match.some((m) => pathname.startsWith(m));
           return (
@@ -56,11 +51,11 @@ function TopNav({ pathname }: { pathname: string }) {
                 href={href}
                 aria-current={on ? "page" : undefined}
                 className={cn(
-                  "flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 text-sm font-bold transition-colors",
-                  on ? "border-border bg-surface text-text shadow-card" : "border-transparent text-text-muted hover:text-text",
+                  "flex h-13 flex-col items-center justify-center gap-0.5 rounded-pill text-[11px] font-bold transition-colors duration-(--t-duration-fast) [&_svg]:size-5",
+                  on ? "bg-white text-ink" : "text-white/75 hover:text-white",
                 )}
               >
-                <Icon aria-hidden className="size-4" />
+                <Icon aria-hidden />
                 {label}
               </Link>
             </li>

@@ -15,26 +15,30 @@ export default async function HistoryPage() {
   const topJuz = [...juzCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
 
   return (
-    <section aria-labelledby="history-title" className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-4 sm:p-6">
-      <div>
-        <h1 id="history-title" className="font-display text-lg text-text">
+    <section aria-labelledby="history-title" className="flex flex-col gap-5">
+      <div className="px-1">
+        <h1 id="history-title" className="font-display text-display text-text">
           History
         </h1>
-        <p className="text-sm text-text-muted">Every day you logged. Open one to see or change its ratings.</p>
+        <p className="mt-1 text-sm text-text-muted">Every day you logged. Open one to see or change its ratings.</p>
       </div>
-      <dl className="grid grid-cols-3 gap-2 text-center">
+      <dl className="grid grid-cols-3 gap-2.5">
         {[
-          ["Days", days.length],
-          ["Goal met", met],
-          ["Quarters", total],
-        ].map(([k, v]) => (
-          <div key={k} className="rounded-md bg-surface-2 px-2 py-3">
-            <dt className="eyebrow">{k}</dt>
-            <dd className="font-display text-xl text-text">{v}</dd>
+          ["Days", days.length, "bg-stone"],
+          ["Goal met", met, "bg-sage"],
+          ["Quarters", total, "bg-mist"],
+        ].map(([k, v, bg]) => (
+          <div key={k} className={`flex flex-col-reverse gap-1 rounded-lg px-3.5 py-4 text-ink ${bg}`}>
+            <dt className="text-xs font-bold text-ink/75">{k}</dt>
+            <dd className="font-display text-xl text-ink">{v}</dd>
           </div>
         ))}
       </dl>
-      {topJuz && <p className="text-sm text-text-muted">Most revised: Juz {topJuz}</p>}
+      {topJuz && (
+        <p className="flex items-center gap-2 px-1 text-sm text-text-muted">
+          <span className="rounded-pill bg-sand px-3 py-1 text-xs font-bold text-ink">Most revised</span> Juz {topJuz}
+        </p>
+      )}
       <DayList days={days} today={userToday(user)} />
     </section>
   );

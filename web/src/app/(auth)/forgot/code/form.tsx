@@ -34,7 +34,7 @@ export function CodeForm({ knowsWho, devBackend }: { knowsWho: boolean; devBacke
         <p className="mb-6 mt-1 text-sm text-text-muted">Use the 6-digit code from the email we sent you.</p>
       )}
       {devBackend && (
-        <p className="mb-4 rounded-md border border-highlight/30 bg-highlight-soft px-3 py-2 text-xs text-text">
+        <p className="mb-4 rounded-lg bg-sand px-4 py-3 text-xs font-semibold text-ink">
           Development backend: no email is sent, so the code is printed in the server log.
         </p>
       )}
@@ -78,7 +78,7 @@ export function CodeForm({ knowsWho, devBackend }: { knowsWho: boolean; devBacke
         <SubmitButton>Set new password</SubmitButton>
       </form>
       <p className="mt-6 border-t border-border pt-6 text-center text-sm">
-        <Link href="/forgot" className="font-bold text-accent underline-offset-2 hover:underline">
+        <Link href="/forgot" className="font-bold text-text underline underline-offset-2">
           Send a new code
         </Link>
       </p>

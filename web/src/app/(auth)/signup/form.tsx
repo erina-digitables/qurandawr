@@ -17,7 +17,7 @@ export function SignUpForm() {
         <MailCheck aria-hidden className="size-10 text-success" />
         <h1 className="font-display text-lg text-text">Check your email</h1>
         <p className="text-sm text-text-muted">{state.notice}</p>
-        <Link href="/signin" className="mt-2 text-sm font-bold text-accent underline-offset-2 hover:underline">
+        <Link href="/signin" className="mt-2 text-sm font-bold text-text underline underline-offset-2">
           Go to sign in
         </Link>
       </div>

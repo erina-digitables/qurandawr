@@ -40,10 +40,10 @@ export function TargetStepper({ value, onChange, min = 1, max = 120 }: { value: 
         aria-valuemax={max}
         aria-valuetext={`${value} quarters, ${juzLabel(value)}`}
         onKeyDown={onKey}
-        className="flex min-w-32 flex-col items-center rounded-md border border-border bg-surface-2 px-4 py-2"
+        className="flex min-w-36 flex-1 flex-col items-center rounded-lg bg-sand px-4 py-3 text-ink"
       >
-        <span className="font-mono text-lg font-bold text-text">{value} qtrs</span>
-        <span className="text-xs text-text-muted">= {juzLabel(value)}</span>
+        <span className="font-display text-display leading-none">{value}</span>
+        <span className="mt-1 text-xs font-bold">quarters · {juzLabel(value)}</span>
       </div>
       <IconButton label="More quarters" onClick={() => set(value + 1)} disabled={value >= max}>
         <Plus aria-hidden />
@@ -68,7 +68,7 @@ export function PresetChips({ value, onChange }: { value: number; onChange: (n: 
             onClick={() => onChange(n)}
             className={cn(
               "h-11 rounded-pill border px-4 text-sm font-bold transition-colors duration-(--t-duration-fast)",
-              on ? "border-accent bg-accent text-on-accent" : "border-border bg-surface-2 text-text hover:bg-surface",
+              on ? "border-accent bg-accent text-on-accent" : "border-border bg-surface text-text hover:bg-surface-2",
             )}
           >
             {n} qtrs <span className={cn("font-normal", on ? "opacity-80" : "text-text-muted")}>· {juzLabel(n)}</span>
@@ -97,7 +97,7 @@ export function JuzAccordion({
   const rubs = Array.from({ length: QUARTERS_PER_JUZ }, (_, i) => (juz - 1) * QUARTERS_PER_JUZ + i + 1);
   const count = rubs.filter((r) => selected.has(r)).length;
   return (
-    <div className={cn("rounded-lg border bg-surface", count ? "border-accent/40" : "border-border")}>
+    <div className={cn("rounded-lg border-2 bg-surface shadow-card", count ? "border-accent" : "border-transparent")}>
       <button
         type="button"
         aria-expanded={open}
@@ -105,32 +105,32 @@ export function JuzAccordion({
         onClick={() => setOpen((o) => !o)}
         className="flex min-h-14 w-full items-center gap-3 rounded-lg px-4 py-3 text-left"
       >
-        <span className="grid size-8 place-items-center rounded-pill bg-surface-2 font-mono text-sm font-bold text-text">{juz}</span>
+        <span className={cn("grid size-10 shrink-0 place-items-center rounded-pill font-mono text-base font-semibold", count ? "bg-slate text-ink" : "bg-surface-2 text-text")}>{juz}</span>
         <span className="min-w-0 flex-1">
-          <span className="block font-display text-base font-extrabold text-text">Juz {juz} · {name}</span>
+          <span className="block font-display text-base font-semibold text-text">Juz {juz} · {name}</span>
           <span className="block text-xs text-text-muted">{count} of {QUARTERS_PER_JUZ} picked</span>
         </span>
         <span aria-hidden className="hidden gap-1 sm:flex">
           {rubs.map((r) => (
-            <span key={r} className={cn("size-1.5 rounded-pill", selected.has(r) ? "bg-accent" : "bg-border")} />
+            <span key={r} className={cn("size-2 rounded-pill", selected.has(r) ? "bg-text" : "bg-border")} />
           ))}
         </span>
         <ChevronDown aria-hidden className={cn("size-5 text-text-muted transition-transform duration-(--t-duration-base)", open && "rotate-180")} />
       </button>
       {open && (
-        <div id={panelId} className="grid grid-cols-2 gap-2 border-t border-border p-3 sm:grid-cols-4">
+        <div id={panelId} className="grid grid-cols-2 gap-2 px-3 pb-3 sm:grid-cols-4">
           {rubs.map((r, i) => {
             const on = selected.has(r);
             return (
               <label
                 key={r}
                 className={cn(
-                  "flex min-h-11 cursor-pointer items-center gap-2 rounded-md border px-3 text-sm font-bold transition-colors",
+                  "flex min-h-12 cursor-pointer items-center gap-2 rounded-pill border-2 px-4 text-sm font-bold transition-colors",
                   "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus",
-                  on ? "border-accent bg-accent-soft text-accent" : "border-border bg-surface-2 text-text",
+                  on ? "border-ink bg-slate text-ink" : "border-transparent bg-surface-2 text-text",
                 )}
               >
-                <input type="checkbox" className="size-4 shrink-0 accent-(--color-accent)" checked={on} onChange={() => onToggle(r)} />
+                <input type="checkbox" className="size-4 shrink-0 accent-[#111111]" checked={on} onChange={() => onToggle(r)} />
                 <span aria-hidden>Q{i + 1}</span>
                 <span className="sr-only">Quarter {i + 1}</span>
               </label>

@@ -6,6 +6,7 @@ type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
+  // Ink pill: the one thing to do on a screen.
   primary: "bg-accent text-on-accent hover:bg-accent-hover",
   secondary: "bg-surface text-text border border-border hover:bg-surface-2",
   ghost: "bg-transparent text-text hover:bg-surface-2",
@@ -14,9 +15,9 @@ const variants: Record<Variant, string> = {
 
 const sizes: Record<Size, string> = {
   // 36px to look at, 44px to hit
-  sm: "relative h-9 px-3 text-sm after:absolute after:-inset-1 after:content-['']",
-  md: "h-11 px-4 text-sm",
-  lg: "h-13 px-5 text-base",
+  sm: "relative h-9 px-4 text-sm after:absolute after:-inset-1 after:content-['']",
+  md: "h-11 px-5 text-sm",
+  lg: "h-14 px-6 text-base",
 };
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -24,11 +25,13 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: Size;
   loading?: boolean;
   icon?: ReactNode;
+  /** Shown after the label, like the arrow on "Start →". */
+  trailing?: ReactNode;
   block?: boolean;
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = "primary", size = "md", loading, icon, block, className, children, disabled, type = "button", ...rest },
+  { variant = "primary", size = "md", loading, icon, trailing, block, className, children, disabled, type = "button", ...rest },
   ref,
 ) {
   return (
@@ -38,9 +41,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md font-bold select-none",
+        "inline-flex items-center justify-center gap-2 rounded-pill font-bold select-none",
         "transition-[background-color,transform,filter] duration-(--t-duration-fast) active:scale-[.98]",
-        "disabled:pointer-events-none disabled:opacity-50",
+        "disabled:pointer-events-none disabled:opacity-40",
         variants[variant],
         sizes[size],
         block && "w-full",
@@ -50,9 +53,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     >
       {loading ? <Loader2 aria-hidden className="size-4 animate-spin" /> : icon}
       {children}
+      {trailing}
     </button>
   );
 });
+
+/** Round icon button: white circle on the canvas, ink when active. */
+export const iconButtonClass = (active?: boolean) =>
+  cn(
+    "inline-grid size-11 shrink-0 place-items-center rounded-pill border transition-colors duration-(--t-duration-fast) [&_svg]:size-5",
+    active ? "border-accent bg-accent text-on-accent" : "border-border bg-surface text-text hover:bg-surface-2",
+  );
 
 export function IconButton({
   label,
@@ -66,14 +77,7 @@ export function IconButton({
       type="button"
       aria-label={label}
       title={label}
-      className={cn(
-        "inline-grid size-11 shrink-0 place-items-center rounded-pill border transition-colors duration-(--t-duration-fast)",
-        "disabled:pointer-events-none disabled:opacity-40 [&_svg]:size-5",
-        active
-          ? "border-highlight/40 bg-highlight-soft text-highlight"
-          : "border-border bg-surface-2 text-text-muted hover:text-text",
-        className,
-      )}
+      className={cn(iconButtonClass(active), "disabled:pointer-events-none disabled:opacity-35", className)}
       {...rest}
     >
       {children}
