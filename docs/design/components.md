@@ -1,4 +1,4 @@
-# Components: Dawr tracker
+# Components: QMuraajah tracker
 
 Built from the recon component list (`docs/recon.md`). Tokens: `tokens.json` → `tokens.css` + `tailwind.css`. Components use role utilities only (`bg-surface`, `text-text-muted`, `border-border-input`), never hex.
 

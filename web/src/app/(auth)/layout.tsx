@@ -24,9 +24,9 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-2">
           <span aria-hidden className="grid size-11 place-items-center rounded-pill bg-forest font-display text-lg font-semibold text-white">
-            د
+            م
           </span>
-          <span className="font-display text-lg text-text">Dawr</span>
+          <span className="font-display text-lg text-text">QMuraajah</span>
         </span>
         <ThemeButton />
       </div>

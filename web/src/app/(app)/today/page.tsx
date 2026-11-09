@@ -5,7 +5,7 @@ import { EmptyState } from "@/components/ui/feedback";
 import { DateNavigator } from "@/components/ui/progress";
 import { backend } from "@/lib/data";
 import { addDays, formatDay, relativeLabel } from "@/lib/dates";
-import { checklistFor } from "@/lib/dawr";
+import { checklistFor } from "@/lib/revision";
 import { portionTitle, quarter, quarterStart, quarterTitle } from "@/lib/quarters";
 import { pickDate, requireUser, userToday } from "@/lib/session";
 import { DayTabs, DayWeek } from "../day-tabs";

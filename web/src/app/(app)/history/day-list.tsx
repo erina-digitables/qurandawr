@@ -2,7 +2,7 @@
 
 import { Search, SearchX } from "lucide-react";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { deleteDay, restoreDay } from "@/app/actions/dawr";
+import { deleteDay, restoreDay } from "@/app/actions/revision";
 import { Toast, EmptyState } from "@/components/ui/feedback";
 import { DayRow } from "@/components/ui/stats";
 import { Segmented } from "@/components/ui/segmented";

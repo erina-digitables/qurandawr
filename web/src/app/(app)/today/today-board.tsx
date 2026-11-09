@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useOptimistic, useState, useTransition } from "react";
-import { rateQuarter } from "@/app/actions/dawr";
+import { rateQuarter } from "@/app/actions/revision";
 import { Toast } from "@/components/ui/feedback";
 import { GoalCard } from "@/components/ui/progress";
 import { QuarterCard, type Quality } from "@/components/ui/quarter-card";

@@ -1,7 +1,7 @@
 # systemd unit for the app. Install: sudo cp deploy/dawr.service /etc/systemd/system/
 # Logs: journalctl -u dawr -f
 [Unit]
-Description=Dawr web app
+Description=QMuraajah web app
 After=network.target postgresql.service
 Wants=postgresql.service
 

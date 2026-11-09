@@ -1,4 +1,4 @@
-# Backend: Dawr
+# Backend: QMuraajah
 
 Status 2026-10-30: **code complete, not yet run against a real Supabase project.** No Supabase, Resend or Vercel account exists yet. You create those (Claude never signs up for services or handles live keys). Until then the app runs on the file-based dev backend, which uses the same interface.
 

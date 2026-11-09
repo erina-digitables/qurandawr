@@ -183,7 +183,7 @@ async function sendConfirmation(userId: string, email: string) {
   // The link carries the raw token; only its hash is stored.
   await sendEmail({
     to: email,
-    subject: "Confirm your email for Dawr",
+    subject: "Confirm your email for QMuraajah",
     html: renderTemplate("confirmation", { SiteURL: siteUrl(), TokenHash: token }),
   });
 }
@@ -283,7 +283,7 @@ export const postgresBackend: Backend = {
         on conflict (user_id, purpose) do update set token_hash = excluded.token_hash, expires_at = excluded.expires_at, attempts = 0`,
       [u.id, sha256(`${u.id}:${code}`), new Date(Date.now() + RESET_MINUTES * 6e4)],
     );
-    await sendEmail({ to: u.email, subject: "Your Dawr password reset code", html: renderTemplate("recovery", { Token: code, SiteURL: siteUrl() }) });
+    await sendEmail({ to: u.email, subject: "Your QMuraajah password reset code", html: renderTemplate("recovery", { Token: code, SiteURL: siteUrl() }) });
   },
 
   async resetPassword(identifier, code, newPassword) {

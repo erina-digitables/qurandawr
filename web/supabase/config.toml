@@ -30,11 +30,11 @@ otp_length = 6
 otp_expiry = 900
 
 [auth.email.template.confirmation]
-subject = "Confirm your email for Dawr"
+subject = "Confirm your email for QMuraajah"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.recovery]
-subject = "Your Dawr reset code"
+subject = "Your QMuraajah reset code"
 content_path = "./supabase/templates/recovery.html"
 
 # Resend over SMTP, from your own verified domain.
@@ -45,4 +45,4 @@ port = 465
 user = "resend"
 pass = "env(RESEND_API_KEY)"
 admin_email = "env(EMAIL_FROM)"
-sender_name = "Dawr"
+sender_name = "QMuraajah"

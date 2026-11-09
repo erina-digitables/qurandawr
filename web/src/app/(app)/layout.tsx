@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { backend } from "@/lib/data";
-import { streak, streakAtRisk } from "@/lib/dawr";
+import { streak, streakAtRisk } from "@/lib/revision";
 import { requireUser, userToday } from "@/lib/session";
 import { BottomNav, Chrome } from "./chrome";
 

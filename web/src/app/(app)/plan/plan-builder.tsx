@@ -2,7 +2,7 @@
 
 import { ArrowRight, Eraser, Search, Target, Wand2 } from "lucide-react";
 import { useMemo, useState, useTransition } from "react";
-import { savePlan, setDailyTarget, startReading } from "@/app/actions/dawr";
+import { savePlan, setDailyTarget, startReading } from "@/app/actions/revision";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/feedback";
 import { JuzAccordion, PresetChips, TargetStepper } from "@/components/ui/target";

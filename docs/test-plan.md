@@ -1,4 +1,4 @@
-# Test plan: Dawr
+# Test plan: QMuraajah
 
 Build: 632c97c  Date: 2026-10-30  Env: local production build (`next build && next start`, port 3100), dev backend with its own empty data folder (`.data-e2e/`), Chromium 1440×900 and Pixel 7 at 390×844, browser time zone Asia/Karachi.
 

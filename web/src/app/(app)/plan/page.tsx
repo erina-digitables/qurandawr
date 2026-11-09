@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DateNavigator } from "@/components/ui/progress";
 import { backend } from "@/lib/data";
 import { addDays, formatDay, relativeLabel } from "@/lib/dates";
-import { suggestQuarters } from "@/lib/dawr";
+import { suggestQuarters } from "@/lib/revision";
 import { pickDate, requireUser, userToday } from "@/lib/session";
 import { DayTabs, DayWeek } from "../day-tabs";
 import { PlanBuilder } from "./plan-builder";

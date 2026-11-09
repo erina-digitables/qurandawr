@@ -40,7 +40,7 @@ export default function PrivacyPage() {
         </p>
       </section>
       <Link href="/" className="text-sm font-bold text-accent underline-offset-2 hover:underline">
-        Back to Dawr
+        Back to QMuraajah
       </Link>
     </main>
   );

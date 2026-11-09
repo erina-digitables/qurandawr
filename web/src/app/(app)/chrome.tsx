@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { signOut } from "@/app/actions/auth";
-import { setTheme } from "@/app/actions/dawr";
+import { setTheme } from "@/app/actions/revision";
 import { AppHeader } from "@/components/ui/app-header";
 import { cn } from "@/lib/cn";
 

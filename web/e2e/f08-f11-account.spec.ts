@@ -52,7 +52,7 @@ test.describe("F08 reset password", () => {
     await p2.getByLabel("Code").fill((await codeFor(a.username))!);
     await p2.getByLabel("New password", { exact: true }).fill("another-new-pass");
     await p2.getByRole("button", { name: "Set new password" }).click();
-    await expect(p2.getByText(/Password changed/)).toBeVisible();
+    await expect(p2.getByRole("heading", { name: /Password changed/ })).toBeVisible();
     await page.goto("/today");
     await expect(page).toHaveURL(/\/signin/);
     await ctx.close();

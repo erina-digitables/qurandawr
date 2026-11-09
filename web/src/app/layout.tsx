@@ -8,7 +8,7 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const lexend = Lexend({ variable: "--font-lexend", subsets: ["latin"], weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {
-  title: { default: "Dawr", template: "%s · Dawr" },
+  title: { default: "QMuraajah", template: "%s · QMuraajah" },
   description: "A calm daily tracker for hifz revision.",
 };
 

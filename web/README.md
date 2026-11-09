@@ -1,4 +1,4 @@
-# Dawr
+# QMuraajah
 
 A daily tracker for hifz revision: set how many quarters (rub') a day you revise, rate each one as you read it, keep a streak.
 
@@ -23,7 +23,7 @@ Open http://localhost:3000 and choose **Try it with sample data**, or create an 
 | `src/app/(app)` | today, plan, progress, history, settings |
 | `src/app/actions` | server actions (every mutation) |
 | `src/lib/data` | the data layer: the only code that touches storage |
-| `src/lib/dawr.ts` | pure revision logic: streaks, suggestions, stats |
+| `src/lib/revision.ts` | pure revision logic: streaks, suggestions, stats |
 | `src/data/quarters.json` | the 240 quarters: juz, hizb, start surah and ayah |
 | `src/styles` | design tokens, generated from `../docs/design/tokens.json` |
 

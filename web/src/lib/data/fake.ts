@@ -3,7 +3,7 @@
 import { randomInt } from "node:crypto";
 import { cookies } from "next/headers";
 import { addDays, type ISODate } from "@/lib/dates";
-import { summarize } from "@/lib/dawr";
+import { summarize } from "@/lib/revision";
 import { TOTAL_QUARTERS } from "@/lib/quarters";
 import type { Backend, ProfilePatch, SignInResult, SignUpInput, SignUpResult } from "./backend";
 import { checkPassword, commit, db, hashPassword, newId, newToken, type LogRow, type UserRow } from "./fake-store";

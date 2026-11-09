@@ -1,8 +1,8 @@
-# Dawr
+# QMuraajah
 
 Keep your hifz fresh, one quarter at a time.
 
-Dawr is a daily revision tracker for people who have memorised the Quran, or are memorising it. Each juz is split into 4 quarters, 120 in the whole Quran. You set how many quarters you revise a day, rate each one as you finish it, and Dawr keeps the streak, the history and the weak spots for you.
+QMuraajah (muraajah, مراجعة, is Arabic for revision) is a daily revision tracker for people who have memorised the Quran, or are memorising it. Each juz is split into 4 quarters, 120 in the whole Quran. You set how many quarters you revise a day, rate each one as you finish it, and QMuraajah keeps the streak, the history and the weak spots for you.
 
 Live at **https://dawr.hifzapp.link**
 
@@ -79,7 +79,7 @@ It sends the last commit to the server, then migrates, rebuilds and restarts the
 | --- | --- |
 | `web/src/app` | the screens and server actions |
 | `web/src/lib/data` | the data layer, the only code that touches storage |
-| `web/src/lib/dawr.ts` | revision logic: streaks, suggestions, stats |
+| `web/src/lib/revision.ts` | revision logic: streaks, suggestions, stats |
 | `web/supabase/migrations`, `web/db/postgres` | the database schema and rules |
 | `web/e2e` | end-to-end tests |
 | `deploy` | server setup and the update script |

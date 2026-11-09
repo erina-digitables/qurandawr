@@ -4,7 +4,7 @@ import { DateNavigator } from "@/components/ui/progress";
 import { StatCard } from "@/components/ui/stats";
 import { backend } from "@/lib/data";
 import { addDays, formatDay } from "@/lib/dates";
-import { stats, streak } from "@/lib/dawr";
+import { stats, streak } from "@/lib/revision";
 import { juzLabel } from "@/lib/quarters";
 import { pickDate, requireUser, userToday } from "@/lib/session";
 import { DayList } from "../history/day-list";

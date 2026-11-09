@@ -12,7 +12,7 @@ import {
   setTheme,
   updateAccount,
   type SettingsState,
-} from "@/app/actions/dawr";
+} from "@/app/actions/revision";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/feedback";
 import type { Tone } from "@/components/ui/stats";

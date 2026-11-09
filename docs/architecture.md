@@ -1,4 +1,4 @@
-# Architecture: Dawr tracker (a rebuild of Quran Dawr's core features)
+# Architecture: QMuraajah tracker (a rebuild of Quran Dawr's core features)
 
 Inputs: `docs/recon.md`, `docs/features.csv`. Screen IDs (S01…) and flow IDs (F01…) refer to the recon map.
 
