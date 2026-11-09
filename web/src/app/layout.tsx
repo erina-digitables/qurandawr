@@ -12,7 +12,16 @@ export const metadata: Metadata = {
   description: "A calm daily tracker for hifz revision.",
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+// viewportFit "cover" lets the phone app draw edge to edge; globals.css pads for the notch.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f3ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#111312" },
+  ],
+};
 
 export default async function RootLayout({
   children,

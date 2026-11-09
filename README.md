@@ -6,6 +6,8 @@ QMuraajah (muraajah, مراجعة, is Arabic for revision) is a daily revision t
 
 Live at **https://dawr.hifzapp.link**
 
+Android and iOS apps live in [`mobile/`](mobile/README.md): a native shell that opens the live site, so every deploy updates them too.
+
 ## What it does
 
 - **Today:** your portion for the day, picked up from where you left off. Rate each quarter Good, Okay or Weak as you read it; the day is done when you reach your goal.

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">QMuraajah</string>
+    <string name="title_activity_main">QMuraajah</string>
+    <string name="package_name">link.hifzapp.qmuraajah</string>
+    <string name="custom_url_scheme">link.hifzapp.qmuraajah</string>
+</resources>

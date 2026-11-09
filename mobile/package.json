@@ -1,0 +1,22 @@
+{
+  "name": "qmuraajah-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QMuraajah for Android and iOS: a Capacitor shell around the live site.",
+  "scripts": {
+    "assets": "capacitor-assets generate --iconBackgroundColor \"#1f3d33\" --iconBackgroundColorDark \"#1f3d33\" --splashBackgroundColor \"#f5f3ee\" --splashBackgroundColorDark \"#111312\"",
+    "sync": "cap sync",
+    "android": "cap open android",
+    "ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/ios": "8.5.3",
+    "@capacitor/splash-screen": "8.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.5.3"
+  }
+}

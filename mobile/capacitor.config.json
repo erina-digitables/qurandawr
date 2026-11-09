@@ -1,0 +1,32 @@
+{
+  "appId": "link.hifzapp.qmuraajah",
+  "appName": "QMuraajah",
+  "webDir": "www",
+  "backgroundColor": "#f5f3ee",
+  "appendUserAgent": "QMuraajahApp/1.0",
+  "server": {
+    "url": "https://dawr.hifzapp.link/today",
+    "errorPath": "offline.html"
+  },
+  "android": {
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": true
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover",
+      "style": "DEFAULT"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "launchAutoHide": true,
+      "backgroundColor": "#f5f3ee",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false
+    }
+  }
+}
